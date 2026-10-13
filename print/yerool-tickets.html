@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Үсний найрын ерөөл</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=PT+Sans:wght@400;700&display=block">
+<style>
+/* Layout: A4 sheets, 2 x 5 cut-out tickets per page (10 per sheet), dashed cut lines; last sheet = two half-page cards for the first cutter and an elder */
+:root {
+  --paper: #ffffff;
+  --ink: #1b2440;
+  --muted: #5d6680;
+  --khadag: #2f62b8;
+  --khadag-pale: #dfe8f7;
+  --cut: #a9b3c6;
+  --font-verse: "PT Serif", Georgia, serif;
+  --font-ui: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+}
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
+body { font-family: var(--font-ui); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+.sheet {
+  width: 210mm; height: 297mm; padding: 10mm 10mm;
+  page-break-after: always; break-after: page;
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(5, 1fr);
+}
+.sheet:last-child { page-break-after: auto; break-after: auto; }
+
+.ticket {
+  border-right: 0.3mm dashed var(--cut);
+  border-bottom: 0.3mm dashed var(--cut);
+  padding: 6mm 7mm 5mm;
+  display: flex; flex-direction: column; gap: 2.5mm; min-width: 0;
+  position: relative;
+}
+.ticket:nth-child(2n) { border-right: none; }
+.ticket:nth-last-child(-n+2) { border-bottom: none; }
+
+/* khadag stripe: a thin blue band with a pale edge, like the scarf tied to the scissors */
+.stripe { height: 1.6mm; background: linear-gradient(var(--khadag) 0 55%, var(--khadag-pale) 55% 100%); border-radius: 1mm; width: 22mm; }
+.head { display: flex; justify-content: space-between; align-items: baseline; font-size: 7.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--khadag); font-weight: 700; }
+.head .no { font-variant-numeric: tabular-nums; color: var(--muted); letter-spacing: 0.04em; }
+.verse { font-family: var(--font-verse); font-size: 12.5pt; line-height: 1.42; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.verse span { display: block; }
+.how { font-size: 7.5pt; color: var(--muted); line-height: 1.3; }
+
+/* last sheet: two half-page cards */
+.sheet.big { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+.card { padding: 9mm 14mm 8mm; display: flex; flex-direction: column; gap: 3mm; border-bottom: 0.3mm dashed var(--cut); }
+.card:last-child { border-bottom: none; }
+.card h2 { margin: 0; font-family: var(--font-verse); font-size: 15pt; font-weight: 700; }
+.card .who { font-size: 9.5pt; color: var(--muted); }
+.card .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10mm; font-family: var(--font-verse); font-size: 13.5pt; line-height: 1.5; align-content: start; margin-top: 6mm; }
+.card .cols span { display: block; }
+.card .gap { height: 2.2mm; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+// Gender comes from the URL hash: #girl or #boy (default boy).
+var girl = location.hash === "#girl";
+var G = function (b, g) { return girl ? g : b; };
+
+// T = traditional folk blessing (аман зохиол, from the research sources); N = newly written in the traditional style.
+var tickets = [
+  ["Урт настай, удаан жаргалтай,", "Аавдаа ачтай, ээждээ тустай,", "Төр улсдаа зүтгэлтэй,", "Түмэн олны манлай болж яваарай."],
+  ["Урт насалж, удаан жаргаарай.", "Аав ээждээ ачтай, ахан дүүстээ тустай,", "Төрдөө үнэнч, түмэндээ хүндтэй", "Сайн хүн болоорой."],
+  ["Аавдаа ачлалтай, ээждээ энэрэлтэй,", "Урт насалж, удаан жаргаж,", "Элбэг баян амьдраарай."],
+  ["Оройн сэв чинь онгон буурал болж,", "Хөхлийн сэв чинь цал буурал болтол", "Урт насалж, удаан жаргаарай."],
+  ["Бууршгүй буянтай,", "Сааршгүй сантай,", "Санасан хамаг үйлс чинь", "Санаагаараа бүтэх болтугай."],
+  ["Наран адил гэрэлтэж яв,", "Навч адил дэлгэрч яв,", "Найр хөөрөөр дүүрэн яв,", "Насандаа үргэлж жаргаж яв."],
+  ["Ная насалж,", "Нас бүрдээ жарга.", "Энх явж,", "Мөнх жарга."],
+  ["Олны манлай, орчлонгийн дээж болж,", "Огторгуйн цэцэг шиг дэлгэрч яв.", "Он мэт тэгш, од мэт гэрэлтэй яв."],
+  ["Төрд нэртэй, түмэнд цуутай,", "Улсад алдартай, олонд хүндтэй", "Сайн хүн болж яваарай."],
+  ["Хэзээд сэтгэл амар,", "Үргэлж энх мэнд,", "Өвчин үгүй,", "Өлзийтэй жаргаарай."],
+  ["Хад мэт эдийн олзтой,", "Хайрга мэт мөнгөний олзтой,", "Сайн явж,", "Санаагаараа жаргаарай."],
+  ["Номд мэргэн, нойрт сэргэг,", "Үйлд уран, үгэнд цэцэн,", "Хуульд шударга,", "Хуримд цовоо яваарай."],
+  ["Аав ээждээ ачлалтай яв,", "Ах дүү олноо баясгаж яв,", "Аялгуу эгшгээ хангинуулж яв."],
+  G(["Морь шиг хурдан, хад шиг бат,", "Тэнгэр шиг уужим сэтгэлтэй", "Эр хүн болоорой."],
+    ["Сарны гэрэл шиг гэгээлэг,", "Цэцэг шиг ялдам,", "Ухаантай сайхан бүсгүй болоорой."]),
+  ["Уулын бүргэд шиг өндөр зорилготой,", "Урсгал ус шиг тасралтгүй", "Эрдэм сурч яваарай."],
+  ["Аавынхаа ачийг санаж,", "Ээжийнхээ энэрлийг дээдэлж,", "Ах дүүстээ түшиг болоорой."],
+  ["Хөхөө донгодох хавар шиг", "Баяр хөөртэй,", "Хөх тэнгэр шиг", "Цэлмэг сэтгэлтэй яваарай."],
+  ["Үс чинь шинээр ургах тусам", "Ухаан бодол чинь өсөж,", "Аз жаргал чинь арвижаарай."],
+  ["Эрүүл энх өсөж,", "Эцэг эхийнхээ", "Итгэл найдвар болоорой."],
+  ["Хүний сайныг хүртэж,", "Хүнд сайныг өгч,", "Хүмүүн ёсоор яваарай."]
+];
+
+var how = "Ээлж ирэхэд: сүүнээс амсаад, хадагтай хайчаар өчүүхэн хэсэг хайчилж, хүүхэд рүү харж хэлнэ.";
+
+var firstSide = G("Баруун", "Зүүн"), secondSide = G("Зүүн", "Баруун");
+var child = G("хүүгийн", "охины");
+
+var firstCard = {
+  title: "Анх хөндөх хүний ерөөл",
+  who: G("Хүүг баруун шанаанаас нь эхэлж хайчилна.", "Охиныг зүүн шанаанаас нь эхэлж хайчилна.") + " Хайчилж байхдаа уншина.",
+  left: [firstSide + " талын шанаанаас", "Эхэлж үргээхэд", "Бадамлянхуа цэцэг", "Дэлгэрч байгаа мэт,", "", secondSide + " талын шанаанаас нь", "Авч үргээхэд", "Зүйл бүрийн эрдэм", "Цацарч байгаа мэт,", "", "Орой дээрээс нь авч үргээхэд", "Ой билэг нь хурцдаж,", "Оюун ухаан нь нэмэгдэж байгаа мэт."],
+  right: ["Энхрий бяцхан " + child, "Оройн сэв нь", "Онгон буурал болж,", "Хөхлийн сэв нь", "Цал буурал болж,", "", "Үүрдийн мөнх настай,", "Үгүйршгүй баян амьдралтай,", "Өргөжин дэлгэрч", "Өрнөн хөгжиж явахын", "Өлзийтэй сайхан ерөөлийг", "Өргөн дэвшүүлье."]
+};
+var elderCard = {
+  title: "Ахмад хүний ерөөл",
+  who: "Өвөө, эмээ эсвэл хүндтэй ахмад хүн хэлж болно. Уламжлалт ерөөл.",
+  left: ["Эрхэм хайртай хонгор " + child + " нь", "Эцгийн билгийг ярихад", "", "Номд мэргэн,", "Нойрт сэргэг,", "Үйлд уран,", "Үгэнд цэцэн,"],
+  right: ["Хуульд шударга,", "Хуримд цовоо,", "Дайнд баатар,", "Далайд усч,", "Галд халдаггүй,", "Галавт шантардаггүй."]
+};
+
+function lines(arr) {
+  return arr.map(function (l) { return l === "" ? '<span class="gap"></span>' : "<span>" + l + "</span>"; }).join("");
+}
+function ticket(t, i) {
+  var no = String(i + 1).padStart(2, "0");
+  return '<div class="ticket"><div class="stripe"></div>' +
+    '<div class="head"><span>Үсний найрын ерөөл</span><span class="no">№ ' + no + '</span></div>' +
+    '<div class="verse">' + lines(t) + '</div>' +
+    '<div class="how">' + how + '</div></div>';
+}
+function card(c) {
+  return '<div class="card"><div class="stripe"></div><h2>' + c.title + '</h2><div class="who">' + c.who + '</div>' +
+    '<div class="cols"><div>' + lines(c.left) + '</div><div>' + lines(c.right) + '</div></div></div>';
+}
+
+var html = "";
+for (var p = 0; p < tickets.length; p += 10) {
+  html += '<section class="sheet">' + tickets.slice(p, p + 10).map(function (t, j) { return ticket(t, p + j); }).join("") + "</section>";
+}
+html += '<section class="sheet big">' + card(firstCard) + card(elderCard) + "</section>";
+document.getElementById("root").innerHTML = html;
+</script>
+</body>
+</html>

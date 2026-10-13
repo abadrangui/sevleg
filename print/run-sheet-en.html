@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Үсний найрын цагийн хуваарь</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=PT+Sans:wght@400;700&display=block">
+<style>
+/* Layout: A4 run sheet. Page 1 = setup (people, items, rules). Then a time column + step blocks; each step shows what happens, who does it, and a blue "say this" box in Mongolian. */
+:root {
+  --paper: #ffffff;
+  --ink: #1b2440;
+  --muted: #5a6480;
+  --line: #d5dceb;
+  --khadag: #2f62b8;
+  --khadag-pale: #e7eefa;
+  --warn: #9b3b1f;
+  --font-verse: "PT Serif", Georgia, serif;
+  --font-ui: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+}
+@page { size: A4; margin: 13mm 14mm 14mm; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--paper); color: var(--ink); }
+body { font-family: var(--font-ui); font-size: 10.5pt; line-height: 1.42; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+h1, h2, h3 { font-family: var(--font-verse); margin: 0; line-height: 1.2; }
+h1 { font-size: 21pt; }
+h2 { font-size: 13.5pt; margin-top: 5mm; margin-bottom: 2mm; }
+p { margin: 0; }
+ul { margin: 0; padding-left: 4.5mm; }
+li { margin: 0.6mm 0; }
+.stripe { height: 1.8mm; width: 26mm; background: linear-gradient(var(--khadag) 0 55%, var(--khadag-pale) 55% 100%); border-radius: 1mm; margin-bottom: 3mm; }
+.sub { color: var(--muted); margin-top: 1.5mm; }
+.fill { display: inline-block; min-width: 38mm; border-bottom: 0.3mm solid var(--ink); height: 4mm; vertical-align: bottom; }
+.fill.s { min-width: 16mm; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+table.roles { width: 100%; border-collapse: collapse; }
+table.roles td { border-bottom: 0.25mm solid var(--line); padding: 1.6mm 1mm; vertical-align: bottom; }
+table.roles td:first-child { width: 52%; }
+.box { border: 0.3mm solid var(--line); border-radius: 2mm; padding: 3mm 4mm; }
+.check li { list-style: none; position: relative; padding-left: 1mm; }
+.check li::before { content: ""; position: absolute; left: -4.5mm; top: 1.2mm; width: 2.8mm; height: 2.8mm; border: 0.3mm solid var(--ink); border-radius: 0.5mm; }
+.rules li strong { color: var(--warn); }
+
+.page-break { break-before: page; }
+
+/* run sheet */
+.step { display: grid; grid-template-columns: 21mm 1fr; gap: 0 5mm; padding: 2.6mm 0; border-top: 0.3mm solid var(--line); }
+.say, .body li, .tip { break-inside: avoid; }
+.body h3 { break-after: avoid; }
+.time { break-after: avoid; }
+.time { font-family: var(--font-verse); font-weight: 700; font-size: 13pt; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.time small { display: block; font-family: var(--font-ui); font-weight: 400; font-size: 8pt; color: var(--muted); margin-top: 1mm; }
+.body { display: grid; gap: 1.8mm; min-width: 0; }
+.body h3 { font-size: 12pt; }
+.who { font-size: 9pt; color: var(--muted); }
+.who b { color: var(--ink); }
+.say { background: var(--khadag-pale); border-left: 1.2mm solid var(--khadag); border-radius: 0 1.5mm 1.5mm 0; padding: 2.2mm 3.5mm; font-family: var(--font-verse); font-size: 11pt; line-height: 1.45; }
+.say .lbl { display: block; font-family: var(--font-ui); font-size: 7.5pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--khadag); margin-bottom: 0.8mm; }
+.say p + p { margin-top: 1.2mm; }
+.tip { font-size: 9pt; color: var(--warn); }
+.order { counter-reset: o; padding-left: 0; }
+.order li { list-style: none; counter-increment: o; display: grid; grid-template-columns: 6mm 1fr; }
+.order li::before { content: counter(o) "."; font-weight: 700; color: var(--khadag); }
+.foot { margin-top: 5mm; font-size: 8.5pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: setup -->
+<div class="stripe"></div>
+<h1>Hair-cutting day: run sheet</h1>
+<p class="sub">Сэвлэг үргээх найр · Boy · About 50 guests · At home · You are the father and the MC</p>
+<p class="sub">Date: <span class="fill"></span> &nbsp; Child's хий нас: <span class="fill s"></span> &nbsp; Start time from the lama: <span class="fill s"></span></p>
+
+<div class="box" style="margin-top:4mm">
+  <b>How to use this sheet.</b> The times are an example for a 10:00 start. If your lama gives a different time, move every time by the same amount. The rule from the traditions: <b>finish the hair cutting before noon.</b> The blue boxes are what you say as the MC. Fill in the blank names before the day.
+</div>
+
+<div class="grid2" style="margin-top:2mm">
+  <div>
+    <h2>Who does what</h2>
+    <table class="roles">
+      <tr><td>MC and feast leader</td><td><b>You (the father)</b></td></tr>
+      <tr><td>First cutter (ивээл жилтэй хүн)</td><td><span class="fill"></span></td></tr>
+      <tr><td>Collects the hair into the хадаг</td><td>Mother</td></tr>
+      <tr><td>Milk bowl and small cups</td><td><span class="fill"></span></td></tr>
+      <tr><td>Gift pouch and gift list</td><td><span class="fill"></span></td></tr>
+      <tr><td>Kitchen and serving</td><td><span class="fill"></span></td></tr>
+      <tr><td>Photos and video</td><td><span class="fill"></span></td></tr>
+      <tr><td>Looks after the guest children</td><td><span class="fill"></span></td></tr>
+      <tr><td>Short stand-in MC when you cut</td><td><span class="fill"></span></td></tr>
+      <tr><td>Blessing reciter / fiddle (ерөөлч, хуурч)</td><td><span class="fill"></span></td></tr>
+    </table>
+  </div>
+  <div>
+    <h2>Ritual tray (ready by 08:30)</h2>
+    <ul class="check">
+      <li>Scissors with a <b>blue хадаг</b> tied to the handle</li>
+      <li>A small <b>wooden knife</b> (a wooden butter knife is fine)</li>
+      <li>A bowl of <b>fresh milk</b> + about 60 small cups</li>
+      <li><b>Juniper (арц)</b> or incense (хүж) + something to burn it on</li>
+      <li>A clean <b>хадаг or pouch for the hair</b></li>
+      <li>The child's <b>gift pouch</b> (хишгийн уут)</li>
+      <li>Notebook and pen for the <b>gift list</b></li>
+      <li><b>Electric clipper</b>, fully charged</li>
+      <li><b>Blessing tickets</b> in a bowl near the door</li>
+      <li>First-cutter card (page 3 of the tickets)</li>
+      <li><b>Цагаалга</b> (rice cooked in milk, with аарц and raisins), made fresh</li>
+      <li>Airag, milk tea, juice. <b>No vodka.</b></li>
+      <li>Thank-you gift for the first cutter; small gift bags for guest children</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Rules almost every source agrees on</h2>
+<ul class="rules">
+  <li>Cut the hair <strong>in the morning, before noon.</strong> Traditionally, guests who come after noon do not cut; they join the meal.</li>
+  <li>The first cut is at the <strong>right temple</strong> (for a boy).</li>
+  <li>Lead the child <strong>sunwise</strong> (clockwise) around the room.</li>
+  <li><strong>Keep all the hair</strong>, also the clipper hair at the end. Never throw it away.</li>
+  <li><strong>No vodka or hard alcohol.</strong> Airag is fine.</li>
+  <li>Food is cooked fresh on the day. No leftovers.</li>
+  <li>If an important relative cannot come, <strong>leave one lock uncut</strong> for them.</li>
+</ul>
+
+<!-- PAGE 2+: the day -->
+<div class="page-break"></div>
+<div class="stripe"></div>
+<h1>The day, step by step</h1>
+<p class="sub">Example times for a 10:00 start. The cutting ends before noon.</p>
+
+<div class="step" style="margin-top:3mm">
+  <div class="time">07:00<small>90 min</small></div>
+  <div class="body">
+    <h3>Morning preparation</h3>
+    <ul>
+      <li>Cook the цагаалга and the meal fresh. Set the table. Put the ritual tray near the head of the table.</li>
+      <li>Charge the clipper. Put the blessing tickets in a bowl by the door.</li>
+      <li>Give the child a light breakfast. A rested child is the most important thing today.</li>
+    </ul>
+    <p class="who">Who: <b>mother, kitchen helper, you</b></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">08:30<small>20 min</small></div>
+  <div class="body">
+    <h3>Purify the scissors</h3>
+    <ul>
+      <li>Burn the juniper or incense. Pass the scissors through the smoke.</li>
+      <li>Tie the blue хадаг to the scissors handle.</li>
+      <li>Optional, if your family does it: an incense offering (сан тавих) and sprinkling the first of the milk tea to the sky and land (цацал) outside.</li>
+    </ul>
+    <p class="who">Who: <b>you or a grandfather</b></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">09:00<small>15 min</small></div>
+  <div class="body">
+    <h3>Brief the helpers, dress the child</h3>
+    <ul>
+      <li>Tell each helper their job (page 1). Give the gift-list helper the cutting order (last page).</li>
+      <li>If you hired an ерөөлч or a fiddle player, tell them the plan: when to play, how many tunes, when the long blessing comes.</li>
+      <li>Dress the child in his deel.</li>
+    </ul>
+    <p class="who">Who: <b>you, mother</b></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">09:30<small>30 min</small></div>
+  <div class="body">
+    <h3>Guests arrive</h3>
+    <ul>
+      <li>Greet guests at the door. Seat the elders in the place of honour: at the back of the room, facing the door (хоймор). Seat the first cutter in the best seat.</li>
+      <li>Serve milk tea. Ask quietly: "Ерөөл бэлдсэн үү?" Give a blessing ticket to anyone who did not prepare one.</li>
+    </ul>
+    <p class="who">Who: <b>you and mother at the door; a helper serves tea</b></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">10:00<small>10 min</small></div>
+  <div class="body">
+    <h3>Opening: welcome and airag</h3>
+    <div class="say"><span class="lbl">You say</span>
+      <p>Эрхэм хүндэт аав ээж, ах дүү, анд нөхөд минь, сайхан өглөөний мэнд хүргэе!</p>
+      <p>Өнөөдөр манай хүү <span class="fill"></span> хий насаараа <span class="fill s"></span> хүрч, анхны сэвлэгээ үргээлгэх өлзий сайхан өдөр боллоо.</p>
+      <p>Энэ өдрийг бидэнтэй хамт тэмдэглэхээр ирсэн та бүхэнд гэр бүлийнхээ өмнөөс талархал илэрхийлье.</p>
+    </div>
+    <ul><li>Offer the first bowl of airag to the oldest guest. Ask them for a short blessing.</li></ul>
+    <div class="say"><span class="lbl">You say</span>
+      <p>Найраа эхлэхийн өмнө уламжлалынхаа дагуу айргийнхаа дээжийг өргөе.</p>
+      <p><span class="fill"></span> ахаа (эгчээ), найрын ерөөлөө дэвшүүлж өгөхийг хүсье.</p>
+    </div>
+    <p class="who">If you have a fiddle player: one tune here.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">10:15<small>10 min</small></div>
+  <div class="body">
+    <h3>The first cut</h3>
+    <ul>
+      <li>The child sits at the head of the table, then stands up for the cut.</li>
+    </ul>
+    <div class="say"><span class="lbl">You say</span>
+      <p>Одоо найрын гол ёслол эхэлж байна.</p>
+      <p>Хүүхэдтэй ивээл жилтэй, буян хишигтэй <span class="fill"></span> ахаа (эгчээ), манай хүүгийн сэвлэгийг анх хөндөж, хайчны амыг нээж өгнө үү.</p>
+      <p><b>За одоо хүүгийнхээ даахийг үргээе!</b></p>
+    </div>
+    <ul>
+      <li>The first cutter touches the hair with the <b>wooden knife</b>.</li>
+      <li>Then cuts a small lock at the <b>right temple</b> with the хадаг scissors. Mother takes the lock into the хадаг.</li>
+      <li>The child tastes milk from a cup. The first cutter dabs a little milk on the child's forehead.</li>
+      <li>The first cutter says the blessing (first-cutter card) and gives the gift.</li>
+    </ul>
+    <p class="who">Who: <b>first cutter, mother, milk helper</b></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">10:25<small>15 min</small></div>
+  <div class="body">
+    <h3>The family cuts</h3>
+    <ul>
+      <li>Order: grandparents, then mother and you, then the father's side and the mother's side (авга, нагац), oldest first.</li>
+      <li>When it is your turn, the stand-in MC says one line for you. Cut, say your blessing, and take the microphone back.</li>
+    </ul>
+    <div class="say"><span class="lbl">You say</span>
+      <p>Одоо өвөө, эмээ нараа урьж байна. Хүүгийнхээ сэвлэгт гар хүргэнэ үү.</p>
+      <p>Одоо авга, нагац ах дүү нараа урьж байна.</p>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">10:40<small>35 min</small></div>
+  <div class="body">
+    <h3>The guests cut</h3>
+    <ul>
+      <li>Oldest guests first. Lead the child <b>sunwise</b> around the room, or let guests come to the child.</li>
+      <li>Each guest: sips milk from a small cup, cuts a <b>tiny</b> lock, says a blessing, puts the gift in the pouch. The gift helper writes down who gave what.</li>
+      <li>About 40 seconds per person. With about 40 guests, plan 35 minutes.</li>
+    </ul>
+    <div class="say"><span class="lbl">You say</span>
+      <p>Хүндэт зочид маань ахмадаасаа эхлээд нар зөв дарааллаар сэвлэгт гар хүргэнэ үү.</p>
+      <p>Сүүнээс амсаад, хадагтай хайчаар өчүүхэн хэсгийг хайчилж, ерөөлөө хэлээд, бэлгээ уутанд хийнэ үү.</p>
+      <p>Ерөөл бэлдээгүй бол ширээн дээр ерөөлийн хуудас бий.</p>
+    </div>
+    <p class="tip">If the child is tired or cries: stop for 5 minutes. Let him sit on his mother's lap, give him a toy or a snack, then continue. Do not force him.</p>
+    <div class="say"><span class="lbl">You say (only if you need a break)</span>
+      <p>Манай хүү бага зэрэг амсхийе. Хэдэн минутын дараа үргэлжлүүлье.</p>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">11:15<small>10 min</small></div>
+  <div class="body">
+    <h3>The long blessing closes the ritual</h3>
+    <ul>
+      <li>The ерөөлч or a respected elder says the long blessing, with music if you have a fiddle player. The cutting is now finished, before noon.</li>
+    </ul>
+    <div class="say"><span class="lbl">You say</span>
+      <p>Сэвлэг үргээх ёслолоо ерөөлөөр өндөрлүүлье.</p>
+      <p><span class="fill"></span> ах маань сэвлэг үргээх ерөөл дэвшүүлнэ.</p>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">11:30<small>60 min</small></div>
+  <div class="body">
+    <h3>The feast</h3>
+    <ul>
+      <li>Serve <b>цагаалга</b> to everyone first, and a small bowl to each child. Then the meal.</li>
+      <li>Airag for toasts. No vodka.</li>
+    </ul>
+    <div class="say"><span class="lbl">You say</span>
+      <p>Хүүгийнхээ сэвлэгийг үргээж, та бүхний ерөөл хишгийг хүртлээ.</p>
+      <p>Одоо цагаалгаа амсаж, найраа үргэлжлүүлье. Идээ ундаагаа сайхан хүртээрэй.</p>
+    </div>
+    <p class="who">Who: <b>kitchen helper serves; you sit with the elders</b></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">12:30<small>30 min</small></div>
+  <div class="body">
+    <h3>Songs, photos, play</h3>
+    <ul>
+      <li>Songs at the table. Family photo with the child and the first cutter. Cake if you have one. The children play.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">13:00<small>15 min</small></div>
+  <div class="body">
+    <h3>Finish the haircut (optional now)</h3>
+    <ul>
+      <li>You shave or trim the rest of the hair with the clipper. Put <b>all</b> of the hair into the хадаг.</li>
+      <li>If the child is tired, do it later at home or at a barber. Ask the barber to give you all the hair.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">13:30<small>20 min</small></div>
+  <div class="body">
+    <h3>Thank-you gifts and closing speech</h3>
+    <ul>
+      <li>Give the special gift to the first cutter. Give the small gift bags to the guest children.</li>
+    </ul>
+    <div class="say"><span class="lbl">You say</span>
+      <p>Өнөөдөр манай хүүгийн сэвлэг үргээх найрт ирж, ерөөл бэлгээ хайрласан та бүхэнд гүн талархал илэрхийлье.</p>
+      <p>Хүүгийнхээ сэвлэгийг анх хөндсөн <span class="fill"></span> ахдаа (эгчдээ) тусгайлан баярласнаа хэлье.</p>
+      <p>Та бүхний ерөөсөн ерөөл биелж, бүгдээрээ эрүүл энх, сайн сайхан яваарай.</p>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">14:00<small>and after</small></div>
+  <div class="body">
+    <h3>Guests leave, and after</h3>
+    <ul>
+      <li>See the elders to the door. If you wish, give them some of the food to take home.</li>
+      <li>Fold the хадаг with all the hair and keep it in a safe place, like the family chest. Never throw it away.</li>
+      <li>Keep the gift list. Call or message the elders and the first cutter the next day to thank them.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- LAST PAGE: cutting order -->
+<div class="page-break"></div>
+<div class="stripe"></div>
+<h1>Cutting order</h1>
+<p class="sub">Write the names before the day. Give a copy to the stand-in MC and the gift-list helper.</p>
+
+<div class="grid2" style="margin-top:4mm">
+  <div>
+    <h2>First and family</h2>
+    <ul class="order">
+      <li>First cutter: <span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+    </ul>
+    <h2>Lock kept for an absent relative</h2>
+    <p>Name: <span class="fill"></span></p>
+  </div>
+  <div>
+    <h2>Elders and other guests</h2>
+    <p class="sub" style="margin-bottom:2mm">Oldest first. Guests not on this list cut after these.</p>
+    <ul class="order">
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+    </ul>
+  </div>
+</div>
+
+<h2>If something goes wrong</h2>
+<ul>
+  <li><b>The child cries or is tired:</b> pause, let him sit on his mother's lap, continue sitting down. Do not force him.</li>
+  <li><b>A guest comes after noon:</b> traditionally they do not cut the hair; they join the meal. Your family can decide.</li>
+  <li><b>The first cutter cannot come:</b> the oldest grandparent cuts first. If there is none, you (the father) cut first.</li>
+  <li><b>Not enough time:</b> let a married couple or a family cut one after another quickly, each with a short blessing.</li>
+</ul>
+
+<p class="foot">Based on Mongolian sources and parents' experiences (2016–2026). Customs differ by family, region and lama. Your elders and your lama have the last word.</p>
+
+</body>
+</html>

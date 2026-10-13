@@ -1,0 +1,358 @@
+<title>Даахинд хэлэх ерөөл</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=PT+Sans:wght@400;700&display=swap">
+<style>
+/* Layout: one phone-first column (~40rem); guest steps first, then copyable wishes, then traditional verses set like a printed blessing sheet */
+:root {
+  --bg: #f4f7fc;
+  --surface: #ffffff;
+  --ink: #16203b;
+  --muted: #59637d;
+  --line: #d8e0ee;
+  --khadag: #2860c2;
+  --khadag-soft: #e6eefb;
+  --milk: #fbfaf6;
+  --warn: #9b3b1f;
+  --warn-soft: #fbe9e3;
+  --font-display: "PT Serif", Georgia, serif;
+  --font-body: "PT Sans", "Noto Sans", "Segoe UI", Roboto, sans-serif;
+  --step-0: 1rem;
+  --step-1: 1.15rem;
+  --step-2: 1.4rem;
+  --step-3: 1.9rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1323; --surface: #161d31; --ink: #e8ecf6; --muted: #a0aac4; --line: #2a3350;
+    --khadag: #8ab1f3; --khadag-soft: #1c2847; --milk: #1a2136; --warn: #f0a080; --warn-soft: #3a221a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1323; --surface: #161d31; --ink: #e8ecf6; --muted: #a0aac4; --line: #2a3350;
+  --khadag: #8ab1f3; --khadag-soft: #1c2847; --milk: #1a2136; --warn: #f0a080; --warn-soft: #3a221a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: var(--step-0); line-height: 1.6;
+  padding-inline: 16px; padding-block: 0 48px;
+}
+.wrap { max-width: 40rem; margin-inline: auto; display: grid; gap: 28px; }
+a { color: var(--khadag); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--khadag); outline-offset: 2px; border-radius: 6px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.25; margin: 0; font-weight: 700; }
+h1 { font-size: var(--step-3); }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+p { margin: 0; }
+.eyebrow { font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--khadag); font-weight: 700; }
+header { padding-top: 28px; display: grid; gap: 10px; }
+.lead { font-size: var(--step-1); color: var(--muted); }
+nav.topics {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--bg); padding-block: 10px; margin-inline: -16px; padding-inline: 16px;
+  border-bottom: 1px solid var(--line);
+}
+nav.topics ul { list-style: none; margin: 0 auto; padding: 0; max-width: 40rem; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+nav.topics ul::-webkit-scrollbar { display: none; }
+nav.topics a {
+  display: inline-block; white-space: nowrap; text-decoration: none; font-size: 0.88rem; font-weight: 700;
+  padding: 5px 11px; border-radius: 999px; background: var(--khadag-soft); color: var(--khadag);
+}
+section { display: grid; gap: 14px; scroll-margin-top: 64px; }
+.note { font-size: 0.92rem; color: var(--muted); }
+ol.steps { margin: 0; padding-left: 1.4rem; display: grid; gap: 10px; }
+ol.steps li { padding-left: 4px; }
+ul.plain { margin: 0; padding-left: 1.1rem; display: grid; gap: 8px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 10px; }
+.wishes { display: grid; gap: 10px; }
+.wish {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 12px 14px; display: flex; gap: 12px; align-items: flex-start; justify-content: space-between;
+}
+.wish p { font-family: var(--font-display); font-size: 1.08rem; line-height: 1.5; min-width: 0; }
+.wish .who { display: block; font-family: var(--font-body); font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+button.copy {
+  flex: none; font: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer;
+  border: 1px solid var(--line); background: var(--khadag-soft); color: var(--khadag);
+  border-radius: 999px; padding: 4px 12px; min-height: 32px;
+}
+button.copy.done { background: var(--khadag); color: var(--surface); border-color: var(--khadag); }
+.label { display: inline-block; font-size: 0.76rem; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--khadag-soft); color: var(--khadag); }
+.label.new { background: var(--warn-soft); color: var(--warn); }
+.verse {
+  background: var(--milk); border: 1px solid var(--line); border-radius: 12px;
+  padding: 16px 18px; display: grid; gap: 10px;
+}
+.verse .lines { font-family: var(--font-display); font-size: 1.05rem; line-height: 1.7; white-space: pre-line; }
+.verse .meta { font-size: 0.85rem; color: var(--muted); }
+.verse-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.dont { border-color: var(--warn-soft); }
+.dont h3 { color: var(--warn); }
+hr { border: none; border-top: 1px solid var(--line); margin: 0; }
+footer { color: var(--muted); font-size: 0.9rem; display: grid; gap: 8px; }
+footer ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 4px; }
+footer li { overflow-wrap: anywhere; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Үсний найрт очих зочдод</span>
+    <h1>Даахинд хэлэх ерөөл</h1>
+    <p class="lead">Хүүхдийн сэвлэгт гар хүргэхдээ юу хийх, юу хэлэх тухай товч сануулга. Уламжлалт ерөөл, шинэ богино ерөөлийн жишээтэй.</p>
+  </header>
+
+  <nav class="topics" aria-label="Хэсгүүд">
+    <ul>
+      <li><a href="#before">Очихын өмнө</a></li>
+      <li><a href="#turn">Ээлж ирэхэд</a></li>
+      <li><a href="#short">Богино ерөөл</a></li>
+      <li><a href="#new">Шинэ жишээ</a></li>
+      <li><a href="#long">Уламжлалт ерөөл</a></li>
+      <li><a href="#first">Анх хөндөх хүнд</a></li>
+      <li><a href="#dont">Болохгүй зүйл</a></li>
+      <li><a href="#sources">Эх сурвалж</a></li>
+    </ul>
+  </nav>
+
+  <section id="before">
+    <span class="eyebrow">Очихын өмнө</span>
+    <h2>Бэлтгэл</h2>
+    <ul class="plain">
+      <li><strong>Цагтаа, өглөө очоорой.</strong> Үсэнд гар хүргэхийг ихэвчлэн үдээс өмнө хийдэг. Зарим айл үдээс хойш ирсэн зочноор хүүхдийн үсэнд хүргэдэггүй.</li>
+      <li><strong>Хүүхдэд бэлэгтэй оч.</strong> Мөнгө өгвөл дээр нь чихэр, зөөлөн ааруул мэт амттан хамт өг. “Дан мөнгө өгдөггүй”, амттан бол “амны хишиг” гэдэг. Тоглоом, ном, хувцас, үсний тууз ч болно.</li>
+      <li><strong>Ерөөлөө урьдчилж бэлд.</strong> Богинохон 1–3 мөр хангалттай. Өмнөх хүнийхээ ерөөлийг яг давтахгүй байхыг хичээ.</li>
+      <li><strong>Цэвэр, бүтэн хувцастай оч.</strong> Дээл заавал биш.</li>
+      <li class="note">Хуучны ёсоор гэрийн дээж, найрын дээж гэж хоёр таваг цагаан идээ, эсвэл хонь, хурга амладаг байжээ. Одоо заавал биш.</li>
+    </ul>
+  </section>
+
+  <section id="turn">
+    <span class="eyebrow">Ээлж ирэхэд</span>
+    <h2>Сэвлэгт гар хүргэхдээ</h2>
+    <div class="card">
+      <ol class="steps">
+        <li>Эхлээд ивээл жилтэй хүн, дараа нь аав ээж, эмээ өвөө, ахмадууд хөндөнө. Таны ээлж тэдний дараа ирнэ. Эзэн айлын зааврыг дага.</li>
+        <li>Сүүнээс амс. Ихэнх айл одоо хүн бүрт жижиг нэг удаагийн аяга өгдөг.</li>
+        <li>Хадагтай хайчийг авч, хүүхдийн үснээс <strong>өчүүхэн</strong> хэсгийг хайчил.</li>
+        <li>Хүүхэд рүү харж, ерөөлөө тод, богинохон хэл.</li>
+        <li>Үсийг эзэн айлын саванд, уутанд хий. Шалан дээр унагахгүй.</li>
+        <li>Бэлгээ хүүхдийн хишгийн уутанд хийж өг, эсвэл эцэг эхэд нь гардуул.</li>
+      </ol>
+    </div>
+    <p class="note">Дараалал нь айл бүрт өөр байж болно. Эзэн айлын хэлснээр л хий.</p>
+  </section>
+
+  <section id="short">
+    <span class="eyebrow">Уламжлалт богино ерөөл</span>
+    <h2>Хэнд ч тохирох ерөөл</h2>
+    <p class="note">Эдгээр нь олон эх сурвалжид давтагддаг ардын уламжлалт ерөөл. Хүү, охин аль алинд нь хэлж болно.</p>
+    <div class="wishes">
+      <div class="wish"><p>Урт настай, удаан жаргалтай, аавдаа ачтай, ээждээ тустай, төр улсдаа зүтгэлтэй, түмэн олныхоо манлай болж яваарай.<span class="who">Хамгийн түгээмэл ерөөл</span></p><button class="copy" type="button">Хуулах</button></div>
+      <div class="wish"><p>Урт насалж, удаан жаргаарай. Аав ээждээ ачтай, ахан дүүсдээ тустай, төрдөө үнэнч, түмэндээ хүндтэй сайн хүн болоорой.<span class="who">Нар зөв тойрон хайчлахдаа хэлдэг</span></p><button class="copy" type="button">Хуулах</button></div>
+      <div class="wish"><p>Аавдаа ачлалтай, ээждээ энэрэлтэй, урт насалж, удаан жаргаж, элбэг баян амьдраарай.<span class="who">Анх хөндөх хүний хэлдэг ерөөл</span></p><button class="copy" type="button">Хуулах</button></div>
+      <div class="wish"><p>Урт наслан, удаан жарга.<span class="who">Хамгийн богино хувилбар</span></p><button class="copy" type="button">Хуулах</button></div>
+    </div>
+  </section>
+
+  <section id="new">
+    <span class="eyebrow">Шинэ жишээ</span>
+    <h2>Өөрийн үгээр хэлэх ерөөл</h2>
+    <p class="note"><span class="label new">Шинээр бичсэн</span> Эдгээр нь Фэйсбүүкээс аваагүй, уламжлалт ерөөлийн хэв маягаар шинээр бичсэн жишээ. Өмнөх хүнээс ялгаатай ерөөл хэлэхэд хэрэг болно.</p>
+    <h3>Хүүд</h3>
+    <div class="wishes">
+      <div class="wish"><p>Морь шиг хурдан, мод шиг бат, тэнгэр шиг уужим сэтгэлтэй эр хүн болоорой.</p><button class="copy" type="button">Хуулах</button></div>
+      <div class="wish"><p>Уулын бүргэд шиг өндөр зорилготой, урсгал ус шиг тасралтгүй эрдэм сурч яваарай.</p><button class="copy" type="button">Хуулах</button></div>
+      <div class="wish"><p>Аавынхаа ачийг санаж, ээжийнхээ энэрлийг дээдэлж, ах дүүстээ түшиг болоорой.</p><button class="copy" type="button">Хуулах</button></div>
+    </div>
+    <h3>Охинд</h3>
+    <div class="wishes">
+      <div class="wish"><p>Сарны гэрэл шиг гэгээлэг, цэцэг шиг ялдам сайхан охин болоорой.</p><button class="copy" type="button">Хуулах</button></div>
+      <div class="wish"><p>Ээжийнхээ ухаан, аавынхаа түшиг, ах эгч нарынхаа хайрын дунд өсөөрэй.</p><button class="copy" type="button">Хуулах</button></div>
+      <div class="wish"><p>Хөхөө донгодох хавар шиг баяр хөөртэй, хөх тэнгэр шиг цэлмэг сэтгэлтэй яваарай.</p><button class="copy" type="button">Хуулах</button></div>
+    </div>
+    <h3>Аль алинд</h3>
+    <div class="wishes">
+      <div class="wish"><p>Үс чинь шинээр ургах тусам ухаан бодол чинь өсөж, аз жаргал чинь арвижаарай.</p><button class="copy" type="button">Хуулах</button></div>
+      <div class="wish"><p>Эрүүл энх өсөж, эцэг эхийнхээ итгэл найдвар болоорой.</p><button class="copy" type="button">Хуулах</button></div>
+      <div class="wish"><p>Хүний сайныг хүртэж, хүнд сайныг өгч, хүмүүн ёсоор яваарай.</p><button class="copy" type="button">Хуулах</button></div>
+    </div>
+  </section>
+
+  <hr>
+
+  <section id="long">
+    <span class="eyebrow">Уламжлалт урт ерөөл</span>
+    <h2>Ардын ерөөлүүд</h2>
+    <p class="note">Эдгээр ерөөлийг ихэвчлэн ерөөлч эсвэл анх хөндөх хүн хэлдэг. Ижил үгээр олон хуудас, группт тархсан ардын уламжлалт ерөөл. Охинд хэлэхдээ “хүүгийнхээ” гэснийг “охиныхоо” болгоод хэлээрэй.</p>
+
+    <div class="verse">
+      <div class="verse-head"><h3>Шанааны ерөөл</h3><button class="copy" type="button" data-target="v1">Хуулах</button></div>
+      <p class="meta">Баруун шанаа, зүүн шанаа, оройгоос нь үргээхдээ хэлдэг.</p>
+      <div class="lines" id="v1">Баруун талын шанаанаас
+Эхэлж үргээхэд
+Бадамлянхуа цэцэг
+Дэлгэрч байгаа мэт
+Зүүн талын шанаанаас нь
+Авч үргээхэд
+Зүйл бүрийн эрдэм
+Цацарч байгаа мэт
+Орой дээрээс нь авч үргээхэд
+Ой билэг нь хурцдаж
+Оюун ухаан нь нэмэгдэж байгаа мэт</div>
+    </div>
+
+    <div class="verse">
+      <div class="verse-head"><h3>Урт насны ерөөл</h3><button class="copy" type="button" data-target="v2">Хуулах</button></div>
+      <p class="meta">Сэвлэг нь буурал болтол урт наслахыг ерөөдөг.</p>
+      <div class="lines" id="v2">Энхрий бяцхан хүүгийн
+Оройн сэв нь
+Онгон буурал болж
+Хөхлийн сэв нь
+Цал буурал болж
+Үүрдийн мөнх настай
+Үгүйршгүй баян амьдралтай
+Өргөжин дэлгэрч
+Өрнөн хөгжиж явахын
+Өлзийтэй сайхан ерөөлийг
+Өргөн дэвшүүлье</div>
+    </div>
+
+    <div class="verse">
+      <div class="verse-head"><h3>Эцгийн билгийн ерөөл</h3><button class="copy" type="button" data-target="v3">Хуулах</button></div>
+      <p class="meta">Хүүд, эцгийнхээ сайн чанарыг өвлөхийг ерөөдөг.</p>
+      <div class="lines" id="v3">Эрхэм хайртай хонгор хүүгийн нь
+Эцгийн билгийг ярихад
+Номд мэргэн
+Нойрт сэргэг
+Үйлэнд уран
+Үгэнд цэцэн
+Хуулинд шударга
+Хуримд цовоо
+Дайнд баатар
+Далайд усч
+Галд халдаггүй
+Галавт шантардаггүй</div>
+    </div>
+
+    <div class="verse">
+      <div class="verse-head"><h3>Хайчны ерөөл</h3><button class="copy" type="button" data-target="v4">Хуулах</button></div>
+      <p class="meta">Ерөөлч хайчаа нээж, анх хөндөхдөө хэлдэг.</p>
+      <div class="lines" id="v4">Ган цагаан хайлш
+Гавшгай цагаан тонгоргийг бэлдээд
+Алтан хайчны амыг нээж
+Амь насыг нь даатгаж
+Мөнгөн хайчны амыг нээж
+Мөнх насыг нь даатгаж
+Ган хошуутай
+Алтан бариултай хайчаа
+Гар мутар бүрийдээ
+Дамжуулан үргээж
+Гарсан төрсөн нас буяныг нь
+Уртасгаж өргөөд</div>
+    </div>
+
+    <div class="verse">
+      <div class="verse-head"><h3>Ерөөлчийн эхлэл</h3><button class="copy" type="button" data-target="v5">Хуулах</button></div>
+      <p class="meta">Ерөөлч найрт ерөөл хэлэх болсон учраа айлтгадаг.</p>
+      <div class="lines" id="v5">Энхрий бяцхан хүүгийнхээ
+Онгон хонгор даахийг нь
+Өдөж баясгаж авсны
+Найр цэнгэл баяр бэлэг болгож
+Намирсан их хадгаа дэлгээд
+Нандин идээнийхээ дээжийг өргөөд
+Найрын олны өмнө
+Намайг бэлэг барь гэлээ</div>
+    </div>
+  </section>
+
+  <section id="first">
+    <span class="eyebrow">Анх хөндөх хүнд</span>
+    <h2>Хэрэв таныг анх хөндүүлэхээр урьсан бол</h2>
+    <p class="note">Ихэвчлэн хүүхэдтэй ивээл жилтэй, буянтай, хүндтэй хүнийг урьдаг. Ойр төрөлд ивээл жилтэй хүн байхгүй бол аав нь хөндөж болно гэдэг. Буриад айлд хүүхдийг эх барьж авсан эмэгтэй эхэлж хөндөх ёс байсан гэж бичсэн эх сурвалж бий.</p>
+    <div class="card">
+      <ol class="steps">
+        <li>Эзэн айлын барьсан цагаан идээ, сүүнээс амсаж, хүүхдэд сүү амсуулна. Хүүхдийн магнайг сүүгээр мялааж болно.</li>
+        <li>Зарим айл эхлээд модон хутгаар үсэнд хүрч, дом болгодог.</li>
+        <li>Хадагтай хайчаар хүүг <strong>баруун</strong> шанаанаас, охиныг <strong>зүүн</strong> шанаанаас эхэлж хайчилна.</li>
+        <li>Ерөөлөө хэлнэ. Ерөөл цээжлээгүйдээ харамссан ээжүүд байдаг тул урьдчилж бэлдээрэй.</li>
+        <li>Эзэн айл танд сүү, даавуу эсвэл бэлэг өгч болно. Хоёр гараараа, эсвэл баруун гараараа хүлээж аваарай.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="dont">
+    <div class="card dont">
+      <h3>Болохгүй зүйл</h3>
+      <ul class="plain">
+        <li>Архи авчрахгүй, хүргэхгүй. Энэ найранд хатуу архи тавьдаггүй гэдэг дээр санал бараг нэгдмэл. Айраг болно.</li>
+        <li>Үснээс том хэсэг хайчлахгүй. Өчүүхэн хэсэг л хангалттай.</li>
+        <li>Хайчилсан үсийг шалан дээр унагахгүй, өөртөө авч явахгүй. Хүүхдийн үсийг ганц ширхэг ч алдахгүй байхыг эрхэмлэдэг.</li>
+        <li>Удаан ярихгүй. Хүүхэд тэвчээр муутай, олон хүн дараалж байна.</li>
+        <li>Хүүхэд айж уйлбал хүчлэхгүй, эцэг эхэд нь хэлээрэй.</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <footer id="sources">
+    <h3>Эх сурвалж</h3>
+    <p>2026 оны 10-р сарын 11-нд Фэйсбүүкээс уншиж цуглуулав. Уламжлалт ерөөлүүд доорх хэд хэдэн нийтлэлд ижил үгээр давтагддаг. Нийтлэлүүдэд everyday.mn, tusgal.mn гэж эх сурвалж заасан. Фэйсбүүкийн мэдээлэл бол хүмүүсийн хуваалцсан зүйл, ёс заншлын албан ёсны эх сурвалж биш.</p>
+    <ul>
+      <li><a href="https://www.facebook.com/groups/288381221961390/posts/1715926792540152/">“Хүүхдийн үс үргээхэд хэлэх ерөөл” · “Сэвлэг үргээх ёсон” групп</a></li>
+      <li><a href="https://www.facebook.com/groups/288381221961390/posts/2274331730032986/">“Хүүхдийн даахь үргээх ёс” · “Сэвлэг үргээх ёсон” групп</a></li>
+      <li><a href="https://www.facebook.com/groups/288381221961390/posts/1980054656127363/">“Сэвлэг үргээх ёс” · “Сэвлэг үргээх ёсон” групп, 2025</a></li>
+      <li><a href="https://www.facebook.com/groups/359615360885161/posts/3519286631584669/">“Хүүхдийн даахь үргээх монгол уламжлал” · “Олуулаа” групп</a></li>
+      <li><a href="https://www.facebook.com/dreamdaykids/posts/pfbid0HTUVFKVyt3oGAeXygBmvRCaTyK66VCGvre8wTf1saBX41zmDk1eHsdG4deoa4i6ql">“Сэвлэг үргээх ёсон” · DREAM DAY kids event center, 2022</a></li>
+      <li><a href="https://www.facebook.com/nandin.bakery/posts/pfbid02a8XeWin9AL5HszD7EB3igUYQvJggYcndLAEMd1nnnEJpKDqNZsqUxzeQ7P6x3zRPl">“Даахь үргээх ёслол” · Nandin Bakery</a></li>
+    </ul>
+    <p>“Шинэ жишээ” хэсгийн ерөөлүүдийг Фэйсбүүкээс аваагүй, шинээр бичсэн.</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  function textOf(btn) {
+    var id = btn.getAttribute('data-target');
+    if (id) { var el = document.getElementById(id); return el ? el.innerText.trim() : ''; }
+    var p = btn.parentElement.querySelector('p');
+    if (!p) return '';
+    var clone = p.cloneNode(true);
+    var who = clone.querySelector('.who');
+    if (who) who.remove();
+    return clone.innerText.trim();
+  }
+  function selectText(btn) {
+    var id = btn.getAttribute('data-target');
+    var el = id ? document.getElementById(id) : btn.parentElement.querySelector('p');
+    if (!el) return;
+    var range = document.createRange();
+    range.selectNodeContents(el);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+  function mark(btn, label) {
+    var old = btn.textContent;
+    btn.textContent = label;
+    btn.classList.add('done');
+    setTimeout(function () { btn.textContent = old; btn.classList.remove('done'); }, 1600);
+  }
+  document.querySelectorAll('button.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var t = textOf(btn);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(t).then(function () { mark(btn, 'Хуулсан'); })
+          .catch(function () { selectText(btn); mark(btn, 'Сонгосон'); });
+      } else {
+        selectText(btn); mark(btn, 'Сонгосон');
+      }
+    });
+  });
+})();
+</script>

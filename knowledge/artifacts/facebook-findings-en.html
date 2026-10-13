@@ -1,0 +1,377 @@
+<title>Сэвлэг Field Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: one reading column (~42rem), sticky topic chips, sections with a plain-English takeaway first and evidence below */
+:root {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --ink: #17203a;
+  --muted: #56607a;
+  --line: #dbe1ec;
+  --khadag: #2a64c6;
+  --khadag-soft: #e7eefb;
+  --gold: #9a6a08;
+  --gold-soft: #fbf1db;
+  --font-display: "Literata", "PT Serif", Georgia, serif;
+  --font-body: "PT Sans", "Noto Sans", "Segoe UI", Roboto, sans-serif;
+  --step-0: 1rem;
+  --step-1: 1.125rem;
+  --step-2: 1.4rem;
+  --step-3: 1.9rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1424; --surface: #161d31; --ink: #e7ebf5; --muted: #9ea8c2; --line: #29324d;
+    --khadag: #86aef2; --khadag-soft: #1c2847; --gold: #e3b553; --gold-soft: #2e2716;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1424; --surface: #161d31; --ink: #e7ebf5; --muted: #9ea8c2; --line: #29324d;
+  --khadag: #86aef2; --khadag-soft: #1c2847; --gold: #e3b553; --gold-soft: #2e2716;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: var(--step-0); line-height: 1.6;
+  padding-inline: 16px; padding-block: 0 48px;
+}
+.wrap { max-width: 42rem; margin-inline: auto; display: grid; gap: 28px; }
+a { color: var(--khadag); }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--khadag); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: var(--step-3); font-weight: 700; }
+h2 { font-size: var(--step-2); font-weight: 700; }
+h3 { font-size: var(--step-1); font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--khadag); font-weight: 700; }
+header { padding-top: 28px; display: grid; gap: 10px; }
+.sub { color: var(--muted); }
+.short {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 16px; display: grid; gap: 8px;
+}
+.short ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 4px; }
+.note { font-size: 0.92rem; color: var(--muted); }
+nav.topics {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--bg); padding-block: 10px; margin-inline: -16px; padding-inline: 16px;
+  border-bottom: 1px solid var(--line);
+}
+nav.topics ul { list-style: none; margin: 0 auto; padding: 0; max-width: 42rem; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+nav.topics ul::-webkit-scrollbar { display: none; }
+nav.topics a {
+  display: inline-block; white-space: nowrap; text-decoration: none; font-size: 0.88rem;
+  padding: 5px 11px; border-radius: 999px; background: var(--khadag-soft); color: var(--khadag); font-weight: 700;
+}
+section { display: grid; gap: 12px; scroll-margin-top: 64px; }
+.take {
+  font-size: var(--step-1); line-height: 1.5;
+  border-left: 3px solid var(--khadag); padding-left: 12px;
+}
+ul.finds { margin: 0; padding-left: 1.1rem; display: grid; gap: 8px; }
+ul.finds li { min-width: 0; }
+ol.steps { margin: 0; padding-left: 1.3rem; display: grid; gap: 8px; }
+.src { font-size: 0.84rem; white-space: nowrap; }
+.tag {
+  display: inline-block; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.02em;
+  padding: 1px 8px; border-radius: 999px; vertical-align: 1px;
+  background: var(--khadag-soft); color: var(--khadag);
+}
+.tag.debate { background: var(--gold-soft); color: var(--gold); }
+.debates { display: grid; gap: 10px; }
+.debate-item {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px;
+  display: grid; gap: 4px;
+}
+.debate-item .sides { color: var(--muted); font-size: 0.95rem; }
+.gap { font-size: 0.92rem; color: var(--muted); }
+.gap strong { color: var(--ink); }
+.table-box { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 30rem; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+tr:last-child td { border-bottom: none; }
+td.num { white-space: nowrap; font-weight: 700; }
+.pricegrid { display: grid; gap: 10px; }
+.price-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; padding-block: 6px; border-bottom: 1px dashed var(--line); }
+.price-row:last-child { border-bottom: none; }
+.price-row .what { min-width: 0; flex: 1 1 14rem; }
+.price-row .amt { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 8px; }
+hr { border: none; border-top: 1px solid var(--line); margin: 0; }
+footer { color: var(--muted); font-size: 0.9rem; display: grid; gap: 8px; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Facebook research · Үсний найр · Сэвлэг үргээх · Даахь үргээх</span>
+    <h1>What Mongolian parents say about the first haircut ceremony</h1>
+    <p class="sub">From the public Facebook group “Сэвлэг үргээх ёсон” (about 101K members). Read on 11 Oct 2026. Most posts are from Aug–Oct 2026.</p>
+    <div class="short">
+      <h3>In short</h3>
+      <ul>
+        <li>Most families now hire a blessing speaker (ерөөлч) with a horse-head fiddle player, keep a small 3-layer boov plate, skip hard liquor, and give small gifts to every visiting child.</li>
+        <li>At home it costs about <strong>1.5M–4.8M₮</strong>. At a kids' cafe or restaurant it costs about <strong>3.2M–7.9M₮</strong>.</li>
+        <li>People disagree most about the right age (even or odd), бууз on the table, ууц, alcohol, and big party vs. small family ritual.</li>
+      </ul>
+      <p class="note">This is personal opinion and experience from Facebook, not an authority on tradition. “Seen in ~N posts” is only my count of what I could load.</p>
+    </div>
+  </header>
+
+  <nav class="topics" aria-label="Topics">
+    <ul>
+      <li><a href="#debates">Disagreements</a></li>
+      <li><a href="#age">Age</a></li>
+      <li><a href="#day">Choosing the day</a></li>
+      <li><a href="#ritual">The ritual</a></li>
+      <li><a href="#hair">The hair</a></li>
+      <li><a href="#table">Food &amp; drink</a></li>
+      <li><a href="#clothes">Clothes</a></li>
+      <li><a href="#gifts">Gifts &amp; money</a></li>
+      <li><a href="#blessings">Blessings</a></li>
+      <li><a href="#regional">Regional</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#tips">Tips</a></li>
+      <li><a href="#method">Method</a></li>
+    </ul>
+  </nav>
+
+  <section id="debates">
+    <span class="eyebrow">Where people disagree</span>
+    <h2>The big disagreements</h2>
+    <div class="debates">
+      <div class="debate-item">
+        <h3>Even or odd age?</h3>
+        <p class="sides">Most say girls at an even age (2 or 4) and boys at an odd age (3 or 5), counted in хий нас (lunar age, about one year more than real age). People often mix up хий нас and real age, so the same rule is said both ways. A minority, quoting a folk-culture lecture, says the right way is an odd age for both, mainly 5.</p>
+      </div>
+      <div class="debate-item">
+        <h3>Бууз and хуушуур (closed dumplings)</h3>
+        <p class="sides">Some say “never at this ceremony”. Some say “not for girls, fine for boys”. One caterer family said a boy's table <em>should</em> have closed food and made банш. Several families served бууз anyway.</p>
+      </div>
+      <div class="debate-item">
+        <h3>Ууц or not</h3>
+        <p class="sides">“Depends on the number of guests” is the usual answer. Some say it is pointless in the city. One lama said no ууц and no layered boov plate. One family: boy gets ууц, girl does not.</p>
+      </div>
+      <div class="debate-item">
+        <h3>Alcohol</h3>
+        <p class="sides">Very strong agreement: no hard liquor. Airag is OK. A small minority still plan Mongolian vodka.</p>
+      </div>
+      <div class="debate-item">
+        <h3>Big party or small family ritual</h3>
+        <p class="sides">One lama said: do it at home, and only parents, grandparents and siblings touch the hair. About 6 commenters agreed. About 3–4 said a big party is fine: “relatives aren't stones, nobody wishes the child harm”.</p>
+      </div>
+      <div class="debate-item">
+        <h3>Shared milk bowl</h3>
+        <p class="sides">Most now use one small disposable cup per person. One family dipped cheese cubes in milk. “Silver kills germs” was rejected by others.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <section id="age">
+    <span class="eyebrow">Age</span>
+    <h2>What age for boys and girls?</h2>
+    <p class="take">The common rule is girls at an even хий нас (2 or 4) and boys at an odd хий нас (3 or 5). But real age and хий нас get mixed up all the time. Most parents end up following their lama or grandparents.</p>
+    <ul class="finds">
+      <li>“Girls at хий нас 2 or 4, boys at 3 or 5.” Girls ideally in spring (“when the cuckoo sings”), boys in autumn (“when deer call”), though many girls are now done in autumn. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2293742201425272/">post, Jul 2026</a></li>
+      <li>One commenter said Khalkha families do girls even and boys odd, and the western aimags do the reverse. <span class="tag">1 commenter, no source</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2293742201425272/">post, Jul 2026</a></li>
+      <li>A thread shows the confusion. “Girl at real age 3 = хий нас 4” was described as “girl odd”, and others corrected it to “girls even by хий нас”. Example given: a child born after Feb 2022 is хий нас 5 but real age 4 in 2026. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2237105633755596/">post, ~Jun 2026</a></li>
+      <li>A group explainer: boys 3 or 5 (odd), girls 2 or 4 (even), and “some areas do it at the first birthday”. A commenter asked for the source and got no answer. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/1980054656127363/">post, Jul 2025</a></li>
+      <li><span class="tag debate">Disagrees</span> A long post citing folk researcher С. Дамбий: do it when the child can say “чулуу” clearly, at an odd age for both sexes, in an ивээл year, mainly at 5. It calls “girls at even age” a modern mistake. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2274331730032986/">post, 2026</a></li>
+    </ul>
+    <p class="gap"><strong>Not found:</strong> Buryat, Dörvöd, Kazakh or Dariganga age rules.</p>
+  </section>
+
+  <section id="day">
+    <span class="eyebrow">Choosing the day</span>
+    <h2>How families pick the day</h2>
+    <p class="take">Most families ask a lama, giving the child's birth-year animal. Different lamas often give different dates for the same sign, and parents find this confusing. The first cut usually happens in the morning.</p>
+    <ul class="finds">
+      <li>In one October thread (30 comments), parents shared lama dates. Tiger-year boys got Oct 13, 14, 15, 18 or 21 from different lamas. A dragon-year boy got Oct 21, and another only Oct 4. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2349832365816255/">post, Oct 2026</a></li>
+      <li>Warnings people repeat: “Oct 15 is an ивээл day but also a black-dog (хар нохой) day.” “The 13th is a repeated day, so we chose the 18th.” “Birth month and day matter too, not just the year.” <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2349832365816255/">post, Oct 2026</a></li>
+      <li>Time of the first touch: two families were each given <strong>9:40–11:40</strong>. Fiddle players are booked for about 9:30–13:30. One explainer says guests who arrive after noon should not touch the hair. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2290836038382555/">post, Aug 2026</a></li>
+      <li>One couple used a Google “good hair-cut day” calendar instead of a lama. It later matched the child's ивээл month and day. Another parent said, “I don't know which lama to ask.” <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2306690880130404/">post, Aug 2026</a></li>
+      <li>Good lunar days listed in group explainers: 3, 4, 6, 8, 10, 11, 13, 14, 15, 19, 22, 23, 26, 27. Mon, Wed and Fri are good. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2274331730032986/">post, 2026</a></li>
+    </ul>
+  </section>
+
+  <section id="ritual">
+    <span class="eyebrow">The ritual</span>
+    <h2>What families actually did</h2>
+    <p class="take">A hired blessing speaker opens. The ивээл-year person (born in a zodiac year that “protects” the child) tastes milk and cuts first. Then family cut by age, then guests, each with a blessing and a gift. The father often finishes with a clipper.</p>
+    <div class="card">
+      <h3>A typical 2026 order</h3>
+      <ol class="steps">
+        <li>The fiddle player plays and the ерөөлч says the opening blessing.</li>
+        <li>The first cutter (ивээл year) gets a bowl of milk with a хадаг (ceremonial silk scarf) and tastes it.</li>
+        <li>They cut first: boy from the right temple, girl from the left (explainers and one parent).</li>
+        <li>Then parents, grandparents and relatives, from the eldest down. Then guests.</li>
+        <li>Each person says a blessing, gives a gift, and often takes a photo.</li>
+        <li>The father or an uncle shaves the rest with a clipper.</li>
+      </ol>
+      <p class="note">Based on <a href="https://www.facebook.com/groups/288381221961390/posts/2313831192749706/">Aug 2026</a>, <a href="https://www.facebook.com/groups/288381221961390/posts/2295243264608499/">Aug 2026</a> and <a href="https://www.facebook.com/groups/288381221961390/posts/2344646559668169/">Sep 2026</a> posts.</p>
+    </div>
+    <ul class="finds">
+      <li>At a cafe, the venue's host brought a whole table up at once instead of going by age. Tip: brief the host on the order beforehand. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2344646559668169/">post, Sep 2026</a></li>
+      <li>A mother who shared her daughter's ивээл year cut first. She regretted only saying “be a good person” instead of a proper blessing. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2295243264608499/">post, Aug 2026</a></li>
+      <li>Prepare the child: talk about it for weeks, show the clipper buzzing, and take them to other ceremonies first. Prepared children sat calmly. <span class="tag">seen in ~4 posts</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2319611175505041/">post, 2026</a></li>
+      <li>Older steps described in explainers: burn juniper (арц), touch the hair first with a wooden knife carved by the father, use old (not new) scissors, carry the child sunwise past the guests. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/1980054656127363/">post, Jul 2025</a></li>
+      <li>If no ивээл-year person is in the close family, “the father can cut first”. Paternal and maternal uncles present? “Not mandatory.” <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2354060175393474/">post, Oct 2026</a></li>
+    </ul>
+  </section>
+
+  <section id="hair">
+    <span class="eyebrow">The hair</span>
+    <h2>What happens to the hair</h2>
+    <p class="take">Keep all of it, including the clipper-shaved part, in the сэвлэг pouch, often wrapped in a хадаг. About 7 of 9 answers said this.</p>
+    <ul class="finds">
+      <li>“Not a single strand left behind. If the child's hair ends up in a bird's nest, it's very bad.” <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2334040027395489/">post, Sep 2026</a></li>
+      <li>In the countryside some put it in the sheep pen “for many sheep”, and keep some as a remedy if the child gets sick. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2334040027395489/">post, Sep 2026</a></li>
+      <li>Framed hair keepsakes are a growing product. One parent chose a set because its hair container stands on a holder. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2319611175505041/">post, 2026</a></li>
+    </ul>
+  </section>
+
+  <section id="table">
+    <span class="eyebrow">Food &amp; drink</span>
+    <h2>What was on the table</h2>
+    <p class="take">A small 3-layer хэвийн боов plate (about 60k₮), white dairy foods, a soup and a meat dish, 2–3 salads, fruit cut into small cups, a cake or cupcakes, and airag. Ууц is optional. No hard liquor.</p>
+    <ul class="finds">
+      <li>Boov plate: 3 layers, about 60k₮ (seen twice). “Up to 5 layers is OK. We did 3 out of respect, because two grandmothers were present.” <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2342322679900557/">post, Sep 2026</a></li>
+      <li>Ууц served sliced to each guest on arrival, and almost all eaten. This was the most popular post seen (748 reactions). <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2342322679900557/">post, Sep 2026</a></li>
+      <li>Ууц skipped “because of our ethnic group's tradition” (group not named). <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2339810083485150/">post, Sep 2026</a></li>
+      <li>Alcohol: in one thread all 7 who answered said no hard liquor, and about 5 said airag is fine. Guests drive, so they drink little. One family bought 10 L of airag and only 5 L was drunk. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2346061212860037/">post, Sep 2026</a></li>
+      <li>Typical home menus: vegetable soup with mantuu, a fine meat stir-fry, fried chicken for kids, seasoned rice, and нийслэл, egg and fresh salads. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2358849451581213/">post, Oct 2026</a></li>
+      <li>Хорхог was “a mistake”: slow, “picnic food”, and the sheep cost about 1M₮. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2295243264608499/">post, Aug 2026</a></li>
+      <li>“Must there be a cake?” Answer: “Only for the look of the table. No custom requires it.” One 10-inch cake is enough. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2339810083485150/">post, Sep 2026</a></li>
+      <li>Fruit cut small in cups or on skewers is very popular. Whole fruit is wasted. <span class="tag">seen in ~6 posts</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2354257652040393/">post, Oct 2026</a></li>
+      <li><span class="tag debate">Debate</span> Бууз / хуушуур: see the <a href="#debates">disagreements</a> above. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2346061212860037/">post, Sep 2026</a></li>
+    </ul>
+  </section>
+
+  <section id="clothes">
+    <span class="eyebrow">Clothes</span>
+    <h2>What the child and family wore</h2>
+    <p class="take">A deel (traditional robe), sometimes in the child's ивээл color, or more and more a lighter Mongol shirt. Parents say a full deel is hot for a small child and is rarely worn again.</p>
+    <ul class="finds">
+      <li>The child wore a Tsagaan Sar deel and got angry wanting to take it off. “A thin Mongol shirt is worn longer.” The parents' matching Mongol shirts cost 180k₮ the pair. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2339810083485150/">post, Sep 2026</a></li>
+      <li>A girl's deel in her ивээл color (green) was sewn by an aunt. The grandmother sewed the pouches. The parents wore deel for the ritual, then changed. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2295243264608499/">post, Aug 2026</a></li>
+      <li>Bought: a deel, boots and hat set, 500k₮+ (“comfy, 10/10”). A Mongol shirt and trousers set, 90k₮ (2025). <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2344646559668169/">post, Sep 2026</a></li>
+      <li>Popular deel makers are busy, so order early. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2308644699935022/">post, Aug 2026</a></li>
+    </ul>
+  </section>
+
+  <section id="gifts">
+    <span class="eyebrow">Gifts &amp; money</span>
+    <h2>Gifts from guests and gifts from hosts</h2>
+    <p class="take">Guests give money and gifts to the child. Hosts give small gifts to every visiting child, and a special gift to the person who cuts first. Many say gifts for every adult guest are not needed.</p>
+    <ul class="finds">
+      <li>One family spent 7.9M₮ and got back <strong>5.5M₮</strong> from about 95 guests, plus toys, 2 pairs of shoes and some clothes. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2319611175505041/">post, 2026</a></li>
+      <li>Explainer: put money <em>and</em> something sweet (soft ааруул or candy) in the child's gift pouch. “Never give only money.” <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2274331730032986/">post, 2026</a></li>
+      <li>Kids' gifts are almost universal. <span class="tag">seen in ~10 posts</span> Examples: 15,900₮ sets; books and snacks; jelly, curd and Oreo for small kids; chocolate plus cash for kids over 12; a 2025 set at 19,700₮ that included 5,000₮ cash. Tip: make about 10 extra. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2342322679900557/">post, Sep 2026</a></li>
+      <li>Gifts for adult guests: “Nothing is required. Only kids get a treat. People over-do it copying each other.” This was the top comment in a 118-comment thread. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2333723004093858/">post, Sep 2026</a></li>
+      <li>Gift for the first cutter <span class="tag">seen in ~7 posts</span>: milk plus fabric (“эдийн дээж, идээний дээж”); 100k₮; a 240k₮ jewelry case; cash in an envelope with a хадаг and a name card; deel silk + 100k₮ + a sheep; a хадаг + 300k₮ + a silver bowl + milk. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2359766924822799/">post, Oct 2026</a></li>
+    </ul>
+    <p class="gap"><strong>Not found:</strong> how much a typical guest gives (no post stated an amount per guest).</p>
+  </section>
+
+  <section id="blessings">
+    <span class="eyebrow">Blessings (ерөөл)</span>
+    <h2>The blessings people share</h2>
+    <p class="take">The same traditional pieces repeat across posts. Parents often ask for ready-made blessings, and some regret not preparing one.</p>
+    <ul class="finds">
+      <li>A cutting verse: cut from the right temple, then the left, then the crown, comparing each cut to a lotus blooming, knowledge spreading and wisdom growing.</li>
+      <li>A scissors verse: opening the golden and silver scissors “entrusts life” and “long life”.</li>
+      <li>A short wish for the child, which begins “Урт настай, удаан жаргалтай, аавдаа ачтай, ээждээ тустай” (long life, lasting happiness, grateful to father, helpful to mother).</li>
+      <li>New rhymed 4-line verses for boys and for girls from a children's gift shop page. Read the full texts here: <a class="src" href="https://www.facebook.com/story.php?story_fbid=1403039485158965&amp;id=100063587802752">page post, Oct 2026</a> and <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2274331730032986/">group post</a>.</li>
+      <li>How hired speakers were judged: “ended too fast” (300k₮); “played only one tune, ask how many” (300k₮); “100% satisfied”. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2339810083485150/">post, Sep 2026</a></li>
+    </ul>
+    <p class="note">The full verses are not copied here out of respect for the authors. Please read them at the links.</p>
+  </section>
+
+  <section id="regional">
+    <span class="eyebrow">Regional customs</span>
+    <h2>Regional and ethnic customs</h2>
+    <p class="take">Facebook gives very little real regional detail. In this group the word “буриад” mostly means Buryat-style children's boots, not customs.</p>
+    <ul class="finds">
+      <li>Khalkha and the western aimags may use opposite even/odd ages. <span class="tag">1 commenter</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2293742201425272/">post, Jul 2026</a></li>
+      <li>Other names for the ritual, said to come from different Mongol groups: даахь авах, даахь тайрах, үс бандгайлах, өрвөг хайчлах, өрвэй үргээх, өрлөг авах, симиг хайчлах, алтан хонхолцог хайчлах. The post does not say which group uses which. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/1980054656127363/">post, Jul 2025</a></li>
+      <li>One family skipped ууц “because of our ethnic group's tradition” (group not named). <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2339810083485150/">post, Sep 2026</a></li>
+      <li>A traditional text shared again and again says: among Khalkha, Dörvöd, Bayad, Myangad and Khotgoid, the grandfather, father or oldest respected person cuts first. <strong>Among Buryats, the woman who delivered the baby cuts first.</strong> Khalkha families avoid Thursday. <a class="src" href="https://www.facebook.com/groups/359615360885161/posts/3519286631584669/">post, Jan 2026</a></li>
+    </ul>
+    <p class="gap"><strong>Not found:</strong> posts on Kazakh or Dariganga practice. The Buryat and Dörvöd detail comes from one copied text, not from families' own experience.</p>
+  </section>
+
+  <section id="prices">
+    <span class="eyebrow">Prices</span>
+    <h2>What it cost (people's own reports)</h2>
+    <p class="take">At home for 30–50 guests, totals cluster around 2.5–3.5M₮. A venue roughly doubles that.</p>
+    <div class="table-box">
+      <table>
+        <thead><tr><th>Where, when</th><th>Guests</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Home, Aug 2026</td><td>24–25</td><td class="num">1.5M₮</td></tr>
+          <tr><td>Home, caterer family, Oct 2026</td><td>30–40</td><td class="num">~2.0M₮</td></tr>
+          <tr><td>Home, Sep 2026</td><td>35 adults + 6 kids</td><td class="num">~2.5M₮</td></tr>
+          <tr><td>Home, Oct 2026</td><td>30 adults + 18 kids</td><td class="num">~3.0M₮</td></tr>
+          <tr><td>Camp, Aug 2026</td><td>40–50 adults + ~30 kids</td><td class="num">3.0M₮</td></tr>
+          <tr><td>Home + catering, Aug 2026</td><td>35</td><td class="num">~3.85M₮</td></tr>
+          <tr><td>Home, Sep 2026</td><td>45 adults + 40 kids</td><td class="num">4.5–4.8M₮</td></tr>
+          <tr><td>Beehive Kids Cafe, Oct 2025</td><td>30 adults + 10 kids</td><td class="num">3.17M₮</td></tr>
+          <tr><td>Pico kids cafe, Sep 2026</td><td>booked for 50</td><td class="num">~4.5M₮</td></tr>
+          <tr><td>Restaurant (a commenter), 2026</td><td>–</td><td class="num">~6M₮</td></tr>
+          <tr><td>Billy kids cafe, 2026</td><td>55 adults + 40 kids</td><td class="num">7.9M₮</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card pricegrid">
+      <h3>Single items</h3>
+      <div class="price-row"><span class="what">Ерөөлч + horse-head fiddle player</span><span class="amt">150k–300k₮</span></div>
+      <div class="price-row"><span class="what">Host + fiddle + ерөөлч bundle</span><span class="amt">~550k₮</span></div>
+      <div class="price-row"><span class="what">Kids' cafe package (2025): per adult / per child</span><span class="amt">65k₮ / 30k₮</span></div>
+      <div class="price-row"><span class="what">Buffet catering for 50 people</span><span class="amt">1.75M₮</span></div>
+      <div class="price-row"><span class="what">Hall rental, bring your own food</span><span class="amt">~500k–600k₮</span></div>
+      <div class="price-row"><span class="what">Сэвлэг set (scissors, pouches)</span><span class="amt">40k–60k₮</span></div>
+      <div class="price-row"><span class="what">Hair clipper</span><span class="amt">40k–100k₮</span></div>
+      <div class="price-row"><span class="what">3-layer хэвийн боов plate</span><span class="amt">~60k₮</span></div>
+      <div class="price-row"><span class="what">All-curd (ааруул) idee plate</span><span class="amt">178k₮</span></div>
+      <div class="price-row"><span class="what">10-inch cake + cupcakes</span><span class="amt">130k–160k₮</span></div>
+      <div class="price-row"><span class="what">Printed name chocolates, each</span><span class="amt">2,000–2,500₮</span></div>
+      <div class="price-row"><span class="what">Wall decoration + topper</span><span class="amt">~65k₮</span></div>
+      <div class="price-row"><span class="what">Traditional wall-decor rental (with setup)</span><span class="amt">250k₮</span></div>
+      <div class="price-row"><span class="what">Venue photographer (quoted / charged)</span><span class="amt">250k / 300k₮</span></div>
+      <div class="price-row"><span class="what">Airag, per liter</span><span class="amt">8k–10k₮</span></div>
+      <div class="price-row"><span class="what">Fruit for the party</span><span class="amt">80k–200k₮</span></div>
+    </div>
+    <p class="note">Sources for every price are in the full notes file. These are self-reports and vary a lot.</p>
+  </section>
+
+  <section id="tips">
+    <span class="eyebrow">Tips &amp; mistakes</span>
+    <h2>What parents wish they had known</h2>
+    <p class="take">Order less food. Get helpers and someone for photos. Book early. Tell the host the cutting order. Prepare your child. Leave yourself time to sit down and enjoy it.</p>
+    <ul class="finds">
+      <li><strong>Too much food.</strong> “Planned 50, 35 came.” Ask clearly who will really come. <span class="tag">seen in ~6 posts</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2313831192749706/">post, Aug 2026</a></li>
+      <li><strong>Get helpers.</strong> “At home it is just like Tsagaan Sar: 1 dishwasher, 1 for tea, 2 cooks.” One mother who did everything herself never sat down and regretted it. <span class="tag">seen in ~5 posts</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2336733743792784/">post, Sep 2026</a></li>
+      <li><strong>Photos.</strong> “The host is too busy. We have almost no photos.” Give one relative the job. <span class="tag">seen in ~4 posts</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2358849451581213/">post, Oct 2026</a></li>
+      <li><strong>Book early.</strong> Cafes were full 1.5 months ahead. Invitations sent 4 days before was “a big mistake”: send them a month ahead. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2295243264608499/">post, Aug 2026</a></li>
+      <li><strong>Brief the performers.</strong> Ask how many tunes the fiddle player will play. Tell the host the cutting order. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2344646559668169/">post, Sep 2026</a></li>
+      <li><strong>Rentals.</strong> Photograph rented pots, or the rental place may hold your ID card over “missing” items. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2336733743792784/">post, Sep 2026</a></li>
+      <li><strong>Home or venue?</strong> “Home is cheaper. Outside is easier but costly.” A restaurant at about 6M₮ had bad food and small portions. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2354257652040393/">post, Oct 2026</a></li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <footer id="method">
+    <h3>How this was collected</h3>
+    <p>On 11 Oct 2026 I read about 27 posts with their comments in the user's own Chrome, and saw about 20 more as search previews. I used one tab at a slow pace and only read: no likes, comments, messages or joins. Facebook showed no warnings or checks.</p>
+    <p>Main group: <a href="https://www.facebook.com/groups/288381221961390/">Сэвлэг үргээх ёсон</a> (public). Long comment threads loaded only partly, so counts are lower than the real numbers. No private people's names or phone numbers are included.</p>
+    <p>Full notes with every source link: <code>research_notes/Mongolian first haircut ceremony/facebook_community.md</code></p>
+  </footer>
+</div>

@@ -1,0 +1,371 @@
+<title>Ээжүүдийн үсний найрын туршлага</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: one reading column (~42rem), sticky topic chips, each section opens with a short takeaway, evidence and source links below */
+:root {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --ink: #17203a;
+  --muted: #56607a;
+  --line: #dbe1ec;
+  --khadag: #2a64c6;
+  --khadag-soft: #e7eefb;
+  --gold: #9a6a08;
+  --gold-soft: #fbf1db;
+  --font-display: "PT Serif", Georgia, serif;
+  --font-body: "PT Sans", "Noto Sans", "Segoe UI", Roboto, sans-serif;
+  --step-0: 1rem;
+  --step-1: 1.125rem;
+  --step-2: 1.4rem;
+  --step-3: 1.85rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1424; --surface: #161d31; --ink: #e7ebf5; --muted: #9ea8c2; --line: #29324d;
+    --khadag: #86aef2; --khadag-soft: #1c2847; --gold: #e3b553; --gold-soft: #2e2716;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1424; --surface: #161d31; --ink: #e7ebf5; --muted: #9ea8c2; --line: #29324d;
+  --khadag: #86aef2; --khadag-soft: #1c2847; --gold: #e3b553; --gold-soft: #2e2716;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: var(--step-0); line-height: 1.6;
+  padding-inline: 16px; padding-block: 0 48px;
+}
+.wrap { max-width: 42rem; margin-inline: auto; display: grid; gap: 28px; }
+a { color: var(--khadag); }
+a:focus-visible { outline: 2px solid var(--khadag); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.25; margin: 0; }
+h1 { font-size: var(--step-3); font-weight: 700; }
+h2 { font-size: var(--step-2); font-weight: 700; }
+h3 { font-size: var(--step-1); font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--khadag); font-weight: 700; }
+header { padding-top: 28px; display: grid; gap: 10px; }
+.sub { color: var(--muted); }
+.short {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 16px; display: grid; gap: 8px;
+}
+.short ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 4px; }
+.note { font-size: 0.92rem; color: var(--muted); }
+nav.topics {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--bg); padding-block: 10px; margin-inline: -16px; padding-inline: 16px;
+  border-bottom: 1px solid var(--line);
+}
+nav.topics ul { list-style: none; margin: 0 auto; padding: 0; max-width: 42rem; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+nav.topics ul::-webkit-scrollbar { display: none; }
+nav.topics a {
+  display: inline-block; white-space: nowrap; text-decoration: none; font-size: 0.88rem;
+  padding: 5px 11px; border-radius: 999px; background: var(--khadag-soft); color: var(--khadag); font-weight: 700;
+}
+section { display: grid; gap: 12px; scroll-margin-top: 64px; }
+.take { font-size: var(--step-1); line-height: 1.5; border-left: 3px solid var(--khadag); padding-left: 12px; }
+ul.finds { margin: 0; padding-left: 1.1rem; display: grid; gap: 8px; }
+ul.finds li { min-width: 0; }
+ol.steps { margin: 0; padding-left: 1.3rem; display: grid; gap: 8px; }
+.src { font-size: 0.84rem; white-space: nowrap; }
+.tag {
+  display: inline-block; font-size: 0.76rem; font-weight: 700;
+  padding: 1px 8px; border-radius: 999px; vertical-align: 1px;
+  background: var(--khadag-soft); color: var(--khadag);
+}
+.tag.debate { background: var(--gold-soft); color: var(--gold); }
+.debates { display: grid; gap: 10px; }
+.debate-item { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: grid; gap: 4px; }
+.debate-item .sides { color: var(--muted); font-size: 0.95rem; }
+.gap { font-size: 0.92rem; color: var(--muted); }
+.gap strong { color: var(--ink); }
+.table-box { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 30rem; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+tr:last-child td { border-bottom: none; }
+td.num { white-space: nowrap; font-weight: 700; }
+.price-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; padding-block: 6px; border-bottom: 1px dashed var(--line); }
+.price-row:last-child { border-bottom: none; }
+.price-row .what { min-width: 0; flex: 1 1 14rem; }
+.price-row .amt { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 8px; }
+hr { border: none; border-top: 1px solid var(--line); margin: 0; }
+footer { color: var(--muted); font-size: 0.9rem; display: grid; gap: 8px; }
+code { font-size: 0.85em; overflow-wrap: anywhere; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Фэйсбүүк судалгаа · Үсний найр · Сэвлэг үргээх · Даахь үргээх</span>
+    <h1>Ээжүүд үсний найрын талаар юу ярьж байна вэ</h1>
+    <p class="sub">Фэйсбүүкийн нээлттэй “Сэвлэг үргээх ёсон” группээс (101 мянга орчим гишүүнтэй) 2026 оны 10-р сарын 11-нд цуглуулав. Ихэнх пост 2026 оны 8–10-р сарынх.</p>
+    <div class="short">
+      <h3>Товчхондоо</h3>
+      <ul>
+        <li>Ихэнх айл ерөөлч, морин хуурч урьж, 3 үетэй жижиг таваг засаж, хатуу архи тавихгүй, ирсэн бүх хүүхдэд гарын бэлэг өгч байна.</li>
+        <li>Гэртээ хийвэл ойролцоогоор <strong>1.5–4.8 сая ₮</strong>, хүүхдийн кафе, ресторанд хийвэл <strong>3.2–7.9 сая ₮</strong> гарч байна.</li>
+        <li>Хамгийн их маргаан: тэгш үү, сондгой нас уу; бууз тавих уу; ууц тавих уу; архи; том найр уу, цөмхөн ёслол уу.</li>
+      </ul>
+      <p class="note">Энд бичсэн зүйлс бол Фэйсбүүк дээрх хүмүүсийн хувийн санал, туршлага. Ёс заншлын албан ёсны эх сурвалж биш. “~N постод” гэдэг нь миний ачаалж уншиж чадсан постуудын тоо.</p>
+    </div>
+  </header>
+
+  <nav class="topics" aria-label="Сэдвүүд">
+    <ul>
+      <li><a href="#debates">Маргаан</a></li>
+      <li><a href="#age">Нас</a></li>
+      <li><a href="#day">Өдөр сонгох</a></li>
+      <li><a href="#ritual">Ёслол</a></li>
+      <li><a href="#hair">Үсээ яах</a></li>
+      <li><a href="#table">Идээ ундаа</a></li>
+      <li><a href="#clothes">Хувцас</a></li>
+      <li><a href="#gifts">Бэлэг, мөнгө</a></li>
+      <li><a href="#blessings">Ерөөл</a></li>
+      <li><a href="#regional">Нутгийн ёс</a></li>
+      <li><a href="#prices">Үнэ</a></li>
+      <li><a href="#tips">Зөвлөгөө</a></li>
+      <li><a href="#method">Арга зүй</a></li>
+    </ul>
+  </nav>
+
+  <section id="debates">
+    <span class="eyebrow">Санал зөрөлдөөн</span>
+    <h2>Хүмүүс юун дээр маргаж байна</h2>
+    <div class="debates">
+      <div class="debate-item">
+        <h3>Тэгш үү, сондгой нас уу?</h3>
+        <p class="sides">Ихэнх нь охиныг хий насаар тэгш (2, 4), хүүг сондгой (3, 5) насанд нь авна гэдэг. Гэхдээ хий нас, жинхэнэ насаа андуурдаг тул нэг дүрмийг эсрэгээр нь хэлэх нь олон. Цөөн хэсэг нь ардын судлаачийн лекцийг иш татаж, хүү охин аль аль нь сондгой насанд, голдуу 5 настайд нь авна гэж үздэг.</p>
+      </div>
+      <div class="debate-item">
+        <h3>Бууз, хуушуур (битүү хоол)</h3>
+        <p class="sides">“Сэвлэгийн найранд огт болохгүй” гэдэг хүн бий. “Охинд болохгүй, хүүд болно” гэдэг хүн ч бий. Харин нэг тогооч айл “хүү учраас битүү хоол байх ёстой” гээд банш хийсэн. Олон айл бууз тавьсаар л байна.</p>
+      </div>
+      <div class="debate-item">
+        <h3>Ууц тавих уу?</h3>
+        <p class="sides">Ихэвчлэн “хүний тооноос хамаарна” гэж хариулдаг. Хотод бол дэмий гэх нь ч бий. Нэг лам ууц ч, тавгийн боов ч тавих хэрэггүй гэжээ. Нэг айл хүүд нь ууц тавьж, охинд нь тавиагүй.</p>
+      </div>
+      <div class="debate-item">
+        <h3>Архи</h3>
+        <p class="sides">Санал бараг нэгдмэл: хатуу архи тавихгүй, айраг болно. Монгол архи тавина гэсэн хүн цөөхөн байсан.</p>
+      </div>
+      <div class="debate-item">
+        <h3>Том найр уу, цөмхөн ёслол уу?</h3>
+        <p class="sides">Нэг лам “гэртээ хий, зөвхөн аав ээж, эмээ өвөө, ах эгч нь л үсэнд нь хүргэ” гэжээ. Үүнийг 6 орчим хүн дэмжсэн. 3–4 хүн “хамаатан чинь чулуу биш, хүүхдэд муу санах хүн байхгүй” гээд том найрыг дэмжсэн.</p>
+      </div>
+      <div class="debate-item">
+        <h3>Нэг аяганаас сүү амсах</h3>
+        <p class="sides">Ихэнх нь одоо хүн бүрт жижиг нэг удаагийн аяга өгч байна. Нэг айл бяслагийг шоо болгож хэрчээд сүүнд дүрүүлсэн. “Мөнгөн аяга нян устгадаг” гэснийг бусад нь няцаасан.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <section id="age">
+    <span class="eyebrow">Нас</span>
+    <h2>Хүү, охиныг хэдэн настайд нь авах вэ</h2>
+    <p class="take">Нийтлэг дүрэм нь охиныг хий насаар тэгш (2, 4), хүүг хий насаар сондгой (3, 5) настайд нь авах. Гэвч жинхэнэ нас, хий насаа байнга андуурдаг. Эцэст нь ихэнх айл лам эсвэл эмээ өвөөгийнхөө зөвлөснөөр хийдэг.</p>
+    <ul class="finds">
+      <li>“Охиныг хий насаар 2, 4-тэйд, хүүг 3, 5-тайд.” Охиныг хавар хөхөө донгодох үед, хүүг намар буга урамдах үед авбал сайн гэдэг ч одоо охиныг ч намар авах нь олон. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2293742201425272/">пост · 2026.07</a></li>
+      <li>Нэг хүний хэлснээр Халхууд охиныг тэгш, хүүг сондгой насанд нь авдаг, баруун аймгуудад эсрэгээрээ. <span class="tag">1 хүн, эх сурвалжгүй</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2293742201425272/">пост · 2026.07</a></li>
+      <li>Андуурлыг харуулсан нэг пост: “охины жинхэнэ нас 3 буюу хий нас 4” гэснийг “охин сондгой” гэж бичсэнийг бусад нь “хий насаар тэгш” гэж засав. Жишээ: 2022 оны 2-р сараас хойш төрсөн хүүхэд 2026 онд жинхэнэ насаар 4, хий насаар 5. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2237105633755596/">пост · 2026.06 орчим</a></li>
+      <li>Группийн тайлбар пост: хүүг 3, 5 (арга, сондгой), охиныг 2, 4 (билиг, тэгш) насанд нь, “зарим нутагт нэг насны ойгоор нь” авдаг. Эх сурвалжийг нь асуухад хариулаагүй. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/1980054656127363/">пост · 2025.07</a></li>
+      <li><span class="tag debate">Эсрэг санал</span> С. Дамбийн лекцийг иш татсан урт пост: хүүхэд “чулуу” гэж тод хэлдэг болсон үед, хүү охин гэлгүй сондгой насанд, ивээл жилд нь, голдуу 5 настайд авна. “Охиныг тэгш насанд авдаг” гэдгийг сүүлийн үеийн буруу ойлголт гэж бичжээ. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2274331730032986/">пост · 2026</a></li>
+    </ul>
+    <p class="gap"><strong>Олдсонгүй:</strong> Буриад, Дөрвөд, Казах, Дарьганга айлуудын насны ёсны тухай пост.</p>
+  </section>
+
+  <section id="day">
+    <span class="eyebrow">Өдөр сонгох</span>
+    <h2>Өдрөө хэрхэн сонгож байна</h2>
+    <p class="take">Ихэнх айл хүүхдийнхээ жилийг хэлж ламаар өдөр үзүүлдэг. Нэг жилтэй хүүхдэд өөр өөр лам өөр өдөр хэлдэг нь эцэг эхчүүдийг төөрөлдүүлж байна. Үсэнд анх гар хүргэхийг ихэвчлэн өглөө хийдэг.</p>
+    <ul class="finds">
+      <li>10-р сарын нэг пост (30 сэтгэгдэл): бар жилтэй хүүд өөр өөр лам 10.13, 14, 15, 18, 21-нийг хэлжээ. Луу жилтэй хүүд нэг лам 10.21, нөгөө нь зөвхөн 10.4 гэсэн. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2349832365816255/">пост · 2026.10</a></li>
+      <li>Давтагддаг анхааруулга: “10.15 ивээл өдөр ч хар нохой өдөр.” “13 нь давхар өдөр учраас 18-ныг сонгосон.” “Төрсөн он төдийгүй сар, өдөр нь бас чухал.” <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2349832365816255/">пост · 2026.10</a></li>
+      <li>Гар хүргэх цаг: хоёр айлд адилхан <strong>9:40–11:40</strong> гэж хэлжээ. Морин хуурчийг 9:30–13:30-ын хооронд захиалдаг. Нэг тайлбарт үдээс хойш ирсэн зочноор үсэнд хүргэдэггүй гэжээ. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2290836038382555/">пост · 2026.08</a></li>
+      <li>Нэг хос ламаас асуулгүй Google-ээс “үс авахад сайн өдөр” хайж сонгосон нь хожим хүүхдийн ивээл сар, өдөртэй таарсан. Өөр нэг ээж “аль ламаас асуухаа мэдэхгүй байна” гэжээ. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2306690880130404/">пост · 2026.08</a></li>
+      <li>Группийн тайлбаруудад дурдсан сайн өдрүүд: шинийн 3, 4, 6, 8, 10, 11, 13, 14, 15, 19, 22, 23, 26, 27. Гаригаас Даваа, Лхагва, Баасан. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2274331730032986/">пост · 2026</a></li>
+    </ul>
+  </section>
+
+  <section id="ritual">
+    <span class="eyebrow">Ёслол</span>
+    <h2>Айлууд яг яаж хийсэн бэ</h2>
+    <p class="take">Урьсан ерөөлч найрыг нээнэ. Хүүхэдтэй ивээл жилтэй хүн сүү амсаад үсэнд нь анх хүрнэ. Дараа нь ах дүүс насны дарааллаар, тэгээд зочид ерөөл хэлж бэлгээ өгнө. Үлдсэн үсийг ихэвчлэн аав нь машинаар хусдаг.</p>
+    <div class="card">
+      <h3>2026 оны нийтлэг дараалал</h3>
+      <ol class="steps">
+        <li>Морин хуурч тоглож, ерөөлч ерөөлөө хэлнэ.</li>
+        <li>Анх хөндөх ивээл жилтэй хүнд хадагтай аягатай сүү барьж, тэр хүн сүүнээс амсана.</li>
+        <li>Тэр хүн эхэлж хөндөнө: хүүг баруун шанаанаас, охиныг зүүн шанаанаас (тайлбар пост болон нэг ээжийн хэлснээр).</li>
+        <li>Дараа нь аав ээж, эмээ өвөө, ах дүүс ахмадаас нь эхлээд, тэгээд зочид хөндөнө.</li>
+        <li>Хүн бүр ерөөл хэлж, бэлгээ өгөөд, ихэвчлэн зургаа авахуулна.</li>
+        <li>Үлдсэн үсийг аав эсвэл авга, нагац нь үсний машинаар хусна.</li>
+      </ol>
+      <p class="note">2026 оны <a href="https://www.facebook.com/groups/288381221961390/posts/2313831192749706/">8-р сар</a>, <a href="https://www.facebook.com/groups/288381221961390/posts/2295243264608499/">8-р сар</a>, <a href="https://www.facebook.com/groups/288381221961390/posts/2344646559668169/">9-р сарын</a> постуудад үндэслэв.</p>
+    </div>
+    <ul class="finds">
+      <li>Кафены хөтлөгч насны дарааллыг баримтлалгүй нэг ширээний хүмүүсийг бөөнд нь босгож ирүүлсэн. Зөвлөгөө: хөтлөгчдөө дарааллаа урьдчилж хэл. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2344646559668169/">пост · 2026.09</a></li>
+      <li>Охинтойгоо ивээл жилтэй ээж нь эхэлж хөндсөн ч ерөөл цээжлээгүй тул “сайн хүн болоорой” гэж л хэлсэндээ харамсжээ. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2295243264608499/">пост · 2026.08</a></li>
+      <li>Хүүхдийнхээ сэтгэлийг бэлд: хэдэн долоо хоногийн өмнөөс ярь, үсний машины дууг сонсго, өөр үсний найранд дагуулж оч. Бэлтгэсэн хүүхдүүд тайван суусан. <span class="tag">~4 постод</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2319611175505041/">пост · 2026</a></li>
+      <li>Тайлбар постуудад гардаг хуучин ёс: арц уугиулах, аавын зорсон модон хутгаар эхэлж домнох, шинэ биш хуучин хайч хэрэглэх, хүүхдийг зочдын урдуур нар зөв тойруулах. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/1980054656127363/">пост · 2025.07</a></li>
+      <li>Ойр төрөлд ивээл жилтэй хүн байхгүй бол “аав нь хөндөж болно”. Авга, нагац заавал байх уу? “Заавал гэсэн юм байхгүй.” <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2354060175393474/">пост · 2026.10</a></li>
+    </ul>
+  </section>
+
+  <section id="hair">
+    <span class="eyebrow">Үсээ яах</span>
+    <h2>Үсийг юу хийдэг вэ</h2>
+    <p class="take">Бүх үсийг, машинаар хуссан хэсгийг нь ч хамт, сэвлэгний уутанд хийж, ихэвчлэн хадаганд боож хадгалдаг. 9 хариултын 7 орчим нь ингэж хэлсэн.</p>
+    <ul class="finds">
+      <li>“Ганц ч ширхэгийг үлдээхгүй. Хүүхдийн үс шувууны үүрэнд орвол муу.” <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2334040027395489/">пост · 2026.09</a></li>
+      <li>Хөдөө зарим айл хонины хотонд “хонь олон болоорой” гээд хаядаг, мөн хүүхэд өвдвөл домнохоор хадгалдаг гэжээ. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2334040027395489/">пост · 2026.09</a></li>
+      <li>Сэвлэг хадгалах жааз улам түгээмэл болж байна. Нэг ээж үсний сав нь тавиуртай гээд тодорхой багцыг сонгосон. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2319611175505041/">пост · 2026</a></li>
+    </ul>
+  </section>
+
+  <section id="table">
+    <span class="eyebrow">Идээ ундаа</span>
+    <h2>Найрын ширээнд юу байв</h2>
+    <p class="take">3 үетэй хэвийн боовтой жижиг таваг (60 мянга орчим ₮), цагаан идээ, шөлтэй хоол, хоёрдугаар хоол, 2–3 төрлийн салат, жижиг аяганд хэрчсэн жимс, торт эсвэл аяган бялуу, айраг. Ууц заавал биш. Хатуу архи тавихгүй.</p>
+    <ul class="finds">
+      <li>Таваг: 3 үе, 60 мянга орчим ₮ (2 айл). “5 хүртэл үе байж болно. Эмээ хоёр маань байсан болохоор хүндэтгээд 3 үеэр зассан.” <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2342322679900557/">пост · 2026.09</a></li>
+      <li>Ууцыг орж ирсэн хүн бүрт хэрчиж идүүлээд бараг дуусгасан. Энэ бол миний харсан хамгийн олон хүн дэмжсэн пост (748 reaction). <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2342322679900557/">пост · 2026.09</a></li>
+      <li>“Ястаны уламжлалаас болоод ууц тавиагүй” гэсэн айл (аль ястан болохыг дурдаагүй). <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2339810083485150/">пост · 2026.09</a></li>
+      <li>Архи: нэг постод хариулсан 7 хүн бүгд хатуу архи тавихгүй гэсэн, 5 орчим нь айраг болно гэсэн. Зочид машинтай ирдэг тул бага уудаг. Нэг айл 10 литр айраг авснаас 5 литр нь л уугдсан. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2346061212860037/">пост · 2026.09</a></li>
+      <li>Гэрийн нийтлэг цэс: мантуутай ногоотой шөл, нарийн махан хуурга, хүүхдэд шарсан тахиа, амталсан будаа, нийслэл, өндөгтэй, шинэ ногооны салат. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2358849451581213/">пост · 2026.10</a></li>
+      <li>Хорхог “алдаа” болсон: удаан болдог, “зугаалгын хоол”, хонь нь сая орчим төгрөг. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2295243264608499/">пост · 2026.08</a></li>
+      <li>“Торт заавал тавих уу?” гэхэд “Ширээний үзэмж л юм. Заавал тавина гэсэн ёс байхгүй” гэжээ. 10 инчийн нэг торт хангалттай. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2339810083485150/">пост · 2026.09</a></li>
+      <li>Жижиг аяганд, шорлогонд хэрчсэн жимс маш сайн идэгддэг, бүтэн жимс үлддэг. <span class="tag">~6 постод</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2354257652040393/">пост · 2026.10</a></li>
+      <li><span class="tag debate">Маргаан</span> Бууз, хуушуур: дээрх <a href="#debates">маргааныг</a> үзнэ үү. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2346061212860037/">пост · 2026.09</a></li>
+    </ul>
+  </section>
+
+  <section id="clothes">
+    <span class="eyebrow">Хувцас</span>
+    <h2>Хүүхэд, гэр бүл юу өмссөн бэ</h2>
+    <p class="take">Дээл, заримдаа хүүхдийн ивээл өнгөөр, эсвэл улам олширч буй нимгэн монгол цамц. Бүтэн дээл бага хүүхдэд халуун, дараа нь бараг өмсдөггүй гэж эцэг эхчүүд хэлж байна.</p>
+    <ul class="finds">
+      <li>Хүүхэд цагаан сарын дээлээ өмсөөд тайлна гээд уурласан. “Нимгэн монгол цамц бол удаан өмсөнө.” Аав ээж нь хосоороо монгол цамцыг 180 мянган ₮-өөр авсан. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2339810083485150/">пост · 2026.09</a></li>
+      <li>Охины дээлийг ивээл өнгө ногооноор нь хадам дүү нь оёж, уутнуудыг эмээ нь оёсон. Аав ээж нь ёслолын үеэр дээлтэй байгаад дараа нь сольж өмссөн. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2295243264608499/">пост · 2026.08</a></li>
+      <li>Худалдаж авсан: дээл, гутал, малгайтай багц 500 мянга гаруй ₮ (“эвтэйхэн, 10/10”); монгол цамц, өмдтэй хослол 90 мянган ₮ (2025). <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2344646559668169/">пост · 2026.09</a></li>
+      <li>Нэртэй дээлчид завгүй тул эртхэн захиал. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2308644699935022/">пост · 2026.08</a></li>
+    </ul>
+  </section>
+
+  <section id="gifts">
+    <span class="eyebrow">Бэлэг, мөнгө</span>
+    <h2>Зочдын бэлэг, эзний бэлэг</h2>
+    <p class="take">Зочид хүүхдэд мөнгө, бэлэг өгнө. Эзэд ирсэн бүх хүүхдэд гарын бэлэг, анх хөндсөн хүнд тусгай бэлэг өгдөг. Том хүн бүрт бэлэг өгөх шаардлагагүй гэх хүн олон.</p>
+    <ul class="finds">
+      <li>Нэг айл 7.9 сая ₮ зарцуулж, 95 орчим зочноос <strong>5.5 сая ₮</strong>, дээр нь олон тоглоом, 2 хос гутал, хэдэн хувцас цугласан. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2319611175505041/">пост · 2026</a></li>
+      <li>Тайлбар пост: хишгийн уутанд мөнгөн дээр нь зөөлөн ааруул, чихэр давхар хий. “Дан мөнгө өгдөггүй.” <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2274331730032986/">пост · 2026</a></li>
+      <li>Хүүхдийн гарын бэлэг бараг бүх айлд байна. <span class="tag">~10 постод</span> Жишээ: 15,900 ₮-ийн багц; ном, амттан; бага хүүхдэд жэлли, зөв аарц, орео; 12-оос дээш насныханд шоколад, мөнгө; 2025 онд 5,000 ₮ бэлэн мөнгөтэй нийт 19,700 ₮-ийн багц. Зөвлөгөө: 10 орчмыг илүү бэлд. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2342322679900557/">пост · 2026.09</a></li>
+      <li>Том хүмүүсийн бэлэг: “Юу ч өгөх албагүй. Хүүхдүүдийн л гарыг цайлгана. Бие биенээ дагаж хэт туйлширч байна.” Энэ бол 118 сэтгэгдэлтэй постын хамгийн дээд сэтгэгдэл. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2333723004093858/">пост · 2026.09</a></li>
+      <li>Анх хөндсөн хүний бэлэг <span class="tag">~7 постод</span>: эдийн дээж (дээлийн даавуу), идээний дээж (сүү); 100 мянган ₮; 240 мянган ₮-ийн үнэт эдлэлийн хайрцаг; хадаг, нэрийн карттай дугтуйтай мөнгө; дээлийн торго, 100 мянга, хонь; хадаг, 300 мянга, мөнгөн аяга, сүү. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2359766924822799/">пост · 2026.10</a></li>
+    </ul>
+    <p class="gap"><strong>Олдсонгүй:</strong> нэг зочин дунджаар хэдэн төгрөг өгдөг тухай.</p>
+  </section>
+
+  <section id="blessings">
+    <span class="eyebrow">Ерөөл</span>
+    <h2>Хүмүүсийн хуваалцдаг ерөөл</h2>
+    <p class="take">Ижил уламжлалт ерөөлүүд олон постод давтагддаг. Эцэг эхчүүд бэлэн ерөөл их хайдаг, зарим нь ерөөл бэлдээгүйдээ харамсдаг.</p>
+    <ul class="finds">
+      <li>Хөндөх ерөөл: баруун шанаа, зүүн шанаа, оройгоос нь үргээхийг бадамлянхуа дэлгэрэх, эрдэм цацрах, оюун ухаан нэмэгдэхтэй зүйрлэдэг.</li>
+      <li>Хайчны ерөөл: алтан, мөнгөн хайчны амыг нээж амь нас, мөнх насыг нь даатгах тухай.</li>
+      <li>Хүүхдэд хэлэх богино ерөөл: “Урт настай, удаан жаргалтай, аавдаа ачтай, ээждээ тустай” гэж эхэлдэг.</li>
+      <li>Хүүхдийн бэлгийн дэлгүүрийн хуудас хүү, охинд зориулсан шинэ шүлэглэсэн ерөөл нийтэлжээ. Бүтэн эхийг эндээс уншина уу: <a class="src" href="https://www.facebook.com/story.php?story_fbid=1403039485158965&amp;id=100063587802752">хуудасны пост · 2026.10</a>, <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2274331730032986/">группийн пост</a>.</li>
+      <li>Урьсан ерөөлчийг хэрхэн үнэлсэн: “хэтэрхий хурдан дууссан” (300 мянга); “нэг л ая тоглосон, хэдэн ая тоглохыг нь урьдчилж асуу” (300 мянга); “100% сэтгэл хангалуун”. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2339810083485150/">пост · 2026.09</a></li>
+    </ul>
+    <p class="note">Ерөөлийн бүтэн эхийг зохиогчдыг хүндэтгэн энд хуулаагүй. Холбоосоор орж уншина уу.</p>
+  </section>
+
+  <section id="regional">
+    <span class="eyebrow">Нутгийн ёс</span>
+    <h2>Нутаг, ястны ялгаа</h2>
+    <p class="take">Фэйсбүүк дээр нутгийн ялгааны тухай бодит мэдээлэл маш бага. Энэ группт “буриад” гэдэг үг ихэвчлэн хүүхдийн буриад гутлыг хэлж байна.</p>
+    <ul class="finds">
+      <li>Халх, баруун аймгууд тэгш, сондгой насыг эсрэгээр нь баримталдаг байж магадгүй. <span class="tag">1 хүн</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2293742201425272/">пост · 2026.07</a></li>
+      <li>Энэ ёсны өөр нэрс (аль ястан аль нэрийг хэрэглэдгийг заагаагүй): даахь авах, даахь тайрах, үс бандгайлах, өрвөг хайчлах, өрвэй үргээх, өрлөг авах, симиг хайчлах, алтан хонхолцог хайчлах. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/1980054656127363/">пост · 2025.07</a></li>
+      <li>“Ястаны уламжлалаас болоод ууц тавиагүй” гэсэн айл (ястныг дурдаагүй). <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2339810083485150/">пост · 2026.09</a></li>
+      <li>Олон дахин хуваалцсан уламжлалт бичвэрт: халх, дөрвөд, баяд, мянгад, хотгойдод өвөг эцэг, эцэг эсвэл хамгийн ахмад хүндтэй хүн эхэлж хөнддөг; <strong>буриадад хүүхдийг эх барьж авсан эмэгтэй</strong> эхэлж хөнддөг. Халхууд пүрэв гарагт үс авахыг цээрэлдэг гэжээ. <a class="src" href="https://www.facebook.com/groups/359615360885161/posts/3519286631584669/">пост · 2026.01</a></li>
+    </ul>
+    <p class="gap"><strong>Олдсонгүй:</strong> Казах, Дарьганга ёсны тухай пост. Буриад, дөрвөдийн тухай мэдээлэл нь айлуудын туршлага биш, нэг л бичвэрээс гаралтай.</p>
+  </section>
+
+  <section id="prices">
+    <span class="eyebrow">Үнэ</span>
+    <h2>Хэд гарсан бэ</h2>
+    <p class="take">30–50 зочинтой гэртээ хийвэл ихэвчлэн 2.5–3.5 сая ₮ гардаг. Газар түрээсэлбэл бараг хоёр дахин нэмэгдэнэ.</p>
+    <div class="table-box">
+      <table>
+        <thead><tr><th>Хаана, хэзээ</th><th>Зочид</th><th>Нийт</th></tr></thead>
+        <tbody>
+          <tr><td>Гэртээ, 2026.08</td><td>24–25</td><td class="num">1.5 сая ₮</td></tr>
+          <tr><td>Гэртээ, тогооч айл, 2026.10</td><td>30–40</td><td class="num">~2.0 сая ₮</td></tr>
+          <tr><td>Гэртээ, 2026.09</td><td>35 том хүн, 6 хүүхэд</td><td class="num">~2.5 сая ₮</td></tr>
+          <tr><td>Гэртээ, 2026.10</td><td>30 том хүн, 18 хүүхэд</td><td class="num">~3.0 сая ₮</td></tr>
+          <tr><td>Лагерт, 2026.08</td><td>40–50 том хүн, 30 орчим хүүхэд</td><td class="num">3.0 сая ₮</td></tr>
+          <tr><td>Гэртээ, кэйтеринг, 2026.08</td><td>35</td><td class="num">~3.85 сая ₮</td></tr>
+          <tr><td>Гэртээ, 2026.09</td><td>45 том хүн, 40 хүүхэд</td><td class="num">4.5–4.8 сая ₮</td></tr>
+          <tr><td>Beehive Kids Cafe, 2025.10</td><td>30 том хүн, 10 хүүхэд</td><td class="num">3.17 сая ₮</td></tr>
+          <tr><td>Pico kids cafe, 2026.09</td><td>50 хүнээр захиалсан</td><td class="num">~4.5 сая ₮</td></tr>
+          <tr><td>Ресторан (сэтгэгдлээс), 2026</td><td>–</td><td class="num">~6 сая ₮</td></tr>
+          <tr><td>Billy kids cafe, 2026</td><td>55 том хүн, 40 хүүхэд</td><td class="num">7.9 сая ₮</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Нэг бүрчилсэн үнэ</h3>
+      <div class="price-row"><span class="what">Ерөөлч, морин хуурч</span><span class="amt">150–300 мянга ₮</span></div>
+      <div class="price-row"><span class="what">Хөтлөгч, хуурч, ерөөлч багцаар</span><span class="amt">~550 мянга ₮</span></div>
+      <div class="price-row"><span class="what">Хүүхдийн кафены багц (2025): том хүн / хүүхэд</span><span class="amt">65 / 30 мянга ₮</span></div>
+      <div class="price-row"><span class="what">50 хүний буфет хоол</span><span class="amt">1.75 сая ₮</span></div>
+      <div class="price-row"><span class="what">Заал түрээс, хоолоо өөрөө оруулах</span><span class="amt">~500–600 мянга ₮</span></div>
+      <div class="price-row"><span class="what">Сэвлэгний багц (хайч, уут)</span><span class="amt">40–60 мянга ₮</span></div>
+      <div class="price-row"><span class="what">Үсний машин</span><span class="amt">40–100 мянга ₮</span></div>
+      <div class="price-row"><span class="what">3 үетэй хэвийн боовны таваг</span><span class="amt">~60 мянга ₮</span></div>
+      <div class="price-row"><span class="what">Дан ааруулан идээ</span><span class="amt">178 мянга ₮</span></div>
+      <div class="price-row"><span class="what">10 инчийн торт, аяган бялуу</span><span class="amt">130–160 мянга ₮</span></div>
+      <div class="price-row"><span class="what">Нэр хэвлэсэн шоколад, ширхэг</span><span class="amt">2,000–2,500 ₮</span></div>
+      <div class="price-row"><span class="what">Ханын чимэглэл, топпер</span><span class="amt">~65 мянга ₮</span></div>
+      <div class="price-row"><span class="what">Үндэсний ханын чимэглэл түрээс (угсралттай)</span><span class="amt">250 мянга ₮</span></div>
+      <div class="price-row"><span class="what">Кафены зурагчин (хэлсэн / авсан)</span><span class="amt">250 / 300 мянга ₮</span></div>
+      <div class="price-row"><span class="what">Айраг, литр</span><span class="amt">8–10 мянга ₮</span></div>
+      <div class="price-row"><span class="what">Найрын жимс</span><span class="amt">80–200 мянга ₮</span></div>
+    </div>
+    <p class="note">Үнэ бүрийн эх сурвалж бүтэн тэмдэглэлд бий. Хүмүүсийн өөрсдийн хэлсэн үнэ тул их зөрүүтэй.</p>
+  </section>
+
+  <section id="tips">
+    <span class="eyebrow">Зөвлөгөө</span>
+    <h2>Эцэг эхчүүд юуг урьдчилж мэдсэн бол гэж хүссэн бэ</h2>
+    <p class="take">Хоолоо бага захиал. Туслах хүн, зурагчинтай бай. Эрт захиал. Хөтлөгчдөө дарааллаа хэл. Хүүхдийнхээ сэтгэлийг бэлд. Өөрөө ч суугаад баяраа хуваалцах цаг гарга.</p>
+    <ul class="finds">
+      <li><strong>Хоол илүүддэг.</strong> “50 хүн гэж бодоод 35 хүн ирсэн.” Хэн ирэхийг тодорхой асуу. <span class="tag">~6 постод</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2313831192749706/">пост · 2026.08</a></li>
+      <li><strong>Туслах хүн ав.</strong> “Гэртээ хийх чинь яг цагаан сар шиг: аяга угаах 1, цай хоол өгөх 1, тогоонд 2 хүн.” Бүгдийг ганцаараа хийсэн ээж ганц ч хором суугаагүйдээ харамссан. <span class="tag">~5 постод</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2336733743792784/">пост · 2026.09</a></li>
+      <li><strong>Зураг.</strong> “Эзэн нь завгүй, зураг бараг байхгүй.” Нэг хамаатандаа даалга. <span class="tag">~4 постод</span> <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2358849451581213/">пост · 2026.10</a></li>
+      <li><strong>Эрт захиал.</strong> 1.5 сарын өмнө кафенууд дүүрсэн байсан. Урилгаа 4 хоногийн өмнө тараасан нь “том алдаа” байсан, сарын өмнө явуул. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2295243264608499/">пост · 2026.08</a></li>
+      <li><strong>Хуурч, хөтлөгчтэй тохир.</strong> Хэдэн ая тоглохыг нь асуу. Хөндөх дарааллыг хөтлөгчдөө хэл. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2344646559668169/">пост · 2026.09</a></li>
+      <li><strong>Түрээс.</strong> Түрээсийн тогоо, савны зургийг авч үлд. Эс тэгвээс “дутуу” гээд үнэмлэхийг чинь барьж үлдэж магадгүй. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2336733743792784/">пост · 2026.09</a></li>
+      <li><strong>Гэртээ юу, гадуур уу?</strong> “Гэртээ хямд, гадуур амар ч үнэтэй.” Ресторанд 6 сая орчим ₮ төлсөн айлын хоол муу, порц бага байсан. <a class="src" href="https://www.facebook.com/groups/288381221961390/posts/2354257652040393/">пост · 2026.10</a></li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <footer id="method">
+    <h3>Энэ мэдээллийг хэрхэн цуглуулсан бэ</h3>
+    <p>2026 оны 10-р сарын 11-нд хэрэглэгчийн Chrome хөтчөөр 27 орчим постыг сэтгэгдэлтэй нь уншиж, 20 орчим постыг хайлтын үр дүнгээр харсан. Нэг табаар аажуу ажилласан, зөвхөн уншсан: лайк дараагүй, сэтгэгдэл бичээгүй, мессеж илгээгээгүй, группт элсээгүй. Фэйсбүүк ямар ч сануулга гаргаагүй.</p>
+    <p>Гол групп: <a href="https://www.facebook.com/groups/288381221961390/">Сэвлэг үргээх ёсон</a> (нээлттэй). Урт сэтгэгдлүүд бүрэн ачаалагдаагүй тул тоонууд бодит байдлаас бага. Хувь хүмүүсийн нэр, утасны дугаарыг оруулаагүй.</p>
+    <p>Эх сурвалж бүрийн холбоостой бүтэн тэмдэглэл (англиар): <code>research_notes/Mongolian first haircut ceremony/facebook_community.md</code></p>
+  </footer>
+</div>

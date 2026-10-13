@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Сэвлэг үргээх найрын хуваарь</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=PT+Sans:wght@400;700&display=block">
+<style>
+/* Layout: A4 run sheet. Page 1 = setup (people, items, rules). Then a time column + step blocks; each step shows what happens, who does it, and a blue "say this" box in Mongolian. */
+:root {
+  --paper: #ffffff;
+  --ink: #1b2440;
+  --muted: #5a6480;
+  --line: #d5dceb;
+  --khadag: #2f62b8;
+  --khadag-pale: #e7eefa;
+  --warn: #9b3b1f;
+  --font-verse: "PT Serif", Georgia, serif;
+  --font-ui: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+}
+@page { size: A4; margin: 13mm 14mm 14mm; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--paper); color: var(--ink); }
+body { font-family: var(--font-ui); font-size: 10.5pt; line-height: 1.42; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+h1, h2, h3 { font-family: var(--font-verse); margin: 0; line-height: 1.2; }
+h1 { font-size: 21pt; }
+h2 { font-size: 13.5pt; margin-top: 5mm; margin-bottom: 2mm; }
+p { margin: 0; }
+ul { margin: 0; padding-left: 4.5mm; }
+li { margin: 0.6mm 0; }
+.stripe { height: 1.8mm; width: 26mm; background: linear-gradient(var(--khadag) 0 55%, var(--khadag-pale) 55% 100%); border-radius: 1mm; margin-bottom: 3mm; }
+.sub { color: var(--muted); margin-top: 1.5mm; }
+.fill { display: inline-block; min-width: 38mm; border-bottom: 0.3mm solid var(--ink); height: 4mm; vertical-align: bottom; }
+.fill.s { min-width: 16mm; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+table.roles { width: 100%; border-collapse: collapse; }
+table.roles td { border-bottom: 0.25mm solid var(--line); padding: 1.6mm 1mm; vertical-align: bottom; }
+table.roles td:first-child { width: 52%; }
+.box { border: 0.3mm solid var(--line); border-radius: 2mm; padding: 3mm 4mm; }
+.check li { list-style: none; position: relative; padding-left: 1mm; }
+.check li::before { content: ""; position: absolute; left: -4.5mm; top: 1.2mm; width: 2.8mm; height: 2.8mm; border: 0.3mm solid var(--ink); border-radius: 0.5mm; }
+.rules li strong { color: var(--warn); }
+
+.page-break { break-before: page; }
+
+/* run sheet */
+.step { display: grid; grid-template-columns: 21mm 1fr; gap: 0 5mm; padding: 2.6mm 0; border-top: 0.3mm solid var(--line); }
+.say, .body li, .tip { break-inside: avoid; }
+.body h3 { break-after: avoid; }
+.time { break-after: avoid; }
+.time { font-family: var(--font-verse); font-weight: 700; font-size: 13pt; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.time small { display: block; font-family: var(--font-ui); font-weight: 400; font-size: 8pt; color: var(--muted); margin-top: 1mm; }
+.body { display: grid; gap: 1.8mm; min-width: 0; }
+.body h3 { font-size: 12pt; }
+.who { font-size: 9pt; color: var(--muted); }
+.who b { color: var(--ink); }
+.say { background: var(--khadag-pale); border-left: 1.2mm solid var(--khadag); border-radius: 0 1.5mm 1.5mm 0; padding: 2.2mm 3.5mm; font-family: var(--font-verse); font-size: 11pt; line-height: 1.45; }
+.say .lbl { display: block; font-family: var(--font-ui); font-size: 7.5pt; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--khadag); margin-bottom: 0.8mm; }
+.say p + p { margin-top: 1.2mm; }
+.tip { font-size: 9pt; color: var(--warn); }
+.order { counter-reset: o; padding-left: 0; }
+.order li { list-style: none; counter-increment: o; display: grid; grid-template-columns: 6mm 1fr; }
+.order li::before { content: counter(o) "."; font-weight: 700; color: var(--khadag); }
+.foot { margin-top: 5mm; font-size: 8.5pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- 1-р нүүр: бэлтгэл -->
+<div class="stripe"></div>
+<h1>Сэвлэг үргээх найрын хуваарь</h1>
+<p class="sub">Хүү · 50 орчим зочин · Гэртээ · Хөтлөгч: аав нь</p>
+<p class="sub">Огноо: <span class="fill"></span> &nbsp; Хүүгийн хий нас: <span class="fill s"></span> &nbsp; Ламын заасан цаг: <span class="fill s"></span></p>
+
+<div class="box" style="margin-top:4mm">
+  <b>Энэ хуудсыг яаж ашиглах вэ.</b> Цагийг 10:00-д эхэлнэ гэж бодож жишээ болгон бичсэн. Ламаас өөр цаг авбал бүх цагийг адил хэмжээгээр урагшлуулж эсвэл хойшлуулаарай. Уламжлалын гол дүрэм: <b>сэвлэг үргээх ёслолыг үд болохоос өмнө дуусгана.</b> Цэнхэр хүрээтэй хэсэг бол хөтлөгчийн хэлэх үг. Хоосон зайд нэрсийг урьдчилан бичээрэй.
+</div>
+
+<div class="grid2" style="margin-top:2mm">
+  <div>
+    <h2>Хэн юу хийх вэ</h2>
+    <table class="roles">
+      <tr><td>Хөтлөгч, найрын ахлагч</td><td><b>Та (аав нь)</b></td></tr>
+      <tr><td>Анх хөндөх хүн (ивээл жилтэй)</td><td><span class="fill"></span></td></tr>
+      <tr><td>Үсийг хадагт хураах</td><td>Ээж нь</td></tr>
+      <tr><td>Сүү, жижиг аяга</td><td><span class="fill"></span></td></tr>
+      <tr><td>Хишгийн уут, бэлгийн бүртгэл</td><td><span class="fill"></span></td></tr>
+      <tr><td>Гал тогоо, үйлчилгээ</td><td><span class="fill"></span></td></tr>
+      <tr><td>Зураг, бичлэг</td><td><span class="fill"></span></td></tr>
+      <tr><td>Зочин хүүхдүүдийг харах</td><td><span class="fill"></span></td></tr>
+      <tr><td>Таныг хайчлах үед түр хөтлөх</td><td><span class="fill"></span></td></tr>
+      <tr><td>Ерөөлч, хуурч</td><td><span class="fill"></span></td></tr>
+    </table>
+  </div>
+  <div>
+    <h2>Ёслолын тавиур (08:30 гэхэд бэлэн)</h2>
+    <ul class="check">
+      <li><b>Цэнхэр хадаг</b> уясан хайч</li>
+      <li>Жижиг <b>модон хутга</b> (модон тосны хутга ч болно)</li>
+      <li>Аягатай <b>шинэ сүү</b>, 60 орчим жижиг аяга</li>
+      <li><b>Арц</b> эсвэл хүж, асаах тавиур</li>
+      <li>Үс хураах цэвэр <b>хадаг эсвэл уут</b></li>
+      <li>Хүүгийн <b>хишгийн уут</b></li>
+      <li><b>Бэлгийн бүртгэлийн</b> дэвтэр, үзэг</li>
+      <li>Бүрэн цэнэглэсэн <b>үсний машин</b></li>
+      <li><b>Ерөөлийн хуудаснууд</b> хаалганы дэргэд аяганд</li>
+      <li>Анх хөндөх хүний ерөөл (ерөөлийн хуудасны 3-р нүүр)</li>
+      <li>Шинээр чанасан <b>цагаалга</b> (аарц, үзэмтэй сүүтэй будаа)</li>
+      <li>Айраг, сүүтэй цай, жимсний шүүс. <b>Архи тавихгүй.</b></li>
+      <li>Анх хөндсөн хүнд талархлын бэлэг, зочин хүүхдүүдэд жижиг бэлэг</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Бараг бүх эх сурвалж санал нийлдэг дүрэм</h2>
+<ul class="rules">
+  <li>Сэвлэгийг <strong>өглөө, үд болохоос өмнө</strong> үргээнэ. Уламжлал ёсоор үдээс хойш ирсэн зочин үсэнд гар хүргэдэггүй, найрт л суудаг.</li>
+  <li>Хүүг <strong>баруун шанаанаас</strong> нь эхэлж хайчилна.</li>
+  <li>Хүүхдийг <strong>нар зөв</strong> тойруулна.</li>
+  <li><strong>Бүх үсийг хадгална</strong>, сүүлд машиндсан үсийг ч. Хэзээ ч хаяхгүй.</li>
+  <li><strong>Архи, хатуу ундаа тавихгүй.</strong> Айраг болно.</li>
+  <li>Хоолоо тухайн өдөр нь шинээр хийнэ. Өмнөх өдрийн хоол тавихгүй.</li>
+  <li>Чухал хамаатан ирж чадахгүй бол түүнд зориулж <strong>нэг сэвлэг үлдээнэ</strong>.</li>
+</ul>
+
+<!-- 2-р нүүрээс: өдрийн дараалал -->
+<div class="page-break"></div>
+<div class="stripe"></div>
+<h1>Өдрийн дараалал</h1>
+<p class="sub">10:00-д эхэлнэ гэж бодсон жишээ цаг. Сэвлэг үргээх ёслол үдээс өмнө дуусна.</p>
+
+<div class="step" style="margin-top:3mm">
+  <div class="time">07:00<small>90 мин</small></div>
+  <div class="body">
+    <h3>Өглөөний бэлтгэл</h3>
+    <ul>
+      <li>Цагаалга, хоолоо шинээр хийнэ. Ширээгээ засна. Ёслолын тавиурыг ширээний тэргүүний дэргэд тавина.</li>
+      <li>Үсний машинаа цэнэглэнэ. Ерөөлийн хуудаснуудыг хаалганы дэргэд аяганд хийж тавина.</li>
+      <li>Хүүд хөнгөн өглөөний цай өгнө. Өнөөдөр хүүгийн амарсан, тайван байх нь хамгийн чухал.</li>
+    </ul>
+    <p class="who">Хэн: <b>ээж нь, гал тогооны туслах, та</b></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">08:30<small>20 мин</small></div>
+  <div class="body">
+    <h3>Хайчаа ариутгах</h3>
+    <ul>
+      <li>Арц эсвэл хүж асааж, хайчаа утаан дээгүүр гаргана.</li>
+      <li>Цэнхэр хадгийг хайчны бариулд уяна.</li>
+      <li>Танай гэр бүл хийдэг бол: гадаа сан тавьж, сүүтэй цайныхаа дээжээр цацал өргөнө.</li>
+    </ul>
+    <p class="who">Хэн: <b>та эсвэл өвөө</b></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">09:00<small>15 мин</small></div>
+  <div class="body">
+    <h3>Туслахуудад заавар өгөх, хүүгээ хувцаслах</h3>
+    <ul>
+      <li>Туслахуудад ажлыг нь хуваарилж хэлнэ (1-р нүүр). Бэлгийн бүртгэл хөтлөх хүнд хайчлах дарааллыг өгнө (сүүлийн нүүр).</li>
+      <li>Ерөөлч, хуурч урьсан бол хөтөлбөрөө хэлнэ: хэзээ тоглох, хэдэн аялгуу тоглох, урт ерөөлийг хэзээ хэлэх.</li>
+      <li>Хүүдээ дээлийг нь өмсгөнө.</li>
+    </ul>
+    <p class="who">Хэн: <b>та, ээж нь</b></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">09:30<small>30 мин</small></div>
+  <div class="body">
+    <h3>Зочид ирэх</h3>
+    <ul>
+      <li>Зочдыг үүдэнд угтана. Ахмадуудыг хойморт, анх хөндөх хүнийг хамгийн хүндтэй суудалд суулгана.</li>
+      <li>Сүүтэй цай барина. «Ерөөл бэлдсэн үү?» гэж зөөлөн асууж, бэлдээгүй хүнд ерөөлийн хуудас өгнө.</li>
+    </ul>
+    <p class="who">Хэн: <b>та, ээж нь үүдэнд; туслах цай барина</b></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">10:00<small>10 мин</small></div>
+  <div class="body">
+    <h3>Нээлт: мэндчилгээ, айраг</h3>
+    <div class="say"><span class="lbl">Таны хэлэх үг</span>
+      <p>Эрхэм хүндэт аав ээж, ах дүү, анд нөхөд минь, сайхан өглөөний мэнд хүргэе!</p>
+      <p>Өнөөдөр манай хүү <span class="fill"></span> хий насаараа <span class="fill s"></span> хүрч, анхны сэвлэгээ үргээлгэх өлзий сайхан өдөр боллоо.</p>
+      <p>Энэ өдрийг бидэнтэй хамт тэмдэглэхээр ирсэн та бүхэнд гэр бүлийнхээ өмнөөс талархал илэрхийлье.</p>
+    </div>
+    <ul><li>Айргийн эхний аягыг хамгийн ахмад зочинд барьж, богино ерөөл хэлэхийг хүснэ.</li></ul>
+    <div class="say"><span class="lbl">Таны хэлэх үг</span>
+      <p>Найраа эхлэхийн өмнө уламжлалынхаа дагуу айргийнхаа дээжийг өргөе.</p>
+      <p><span class="fill"></span> ахаа (эгчээ), найрын ерөөлөө дэвшүүлж өгөхийг хүсье.</p>
+    </div>
+    <p class="who">Хуурч байвал энд нэг аялгуу тоглоно.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">10:15<small>10 мин</small></div>
+  <div class="body">
+    <h3>Анх хөндөх</h3>
+    <ul>
+      <li>Хүү ширээний тэргүүнд сууж байгаад, хайчлах үед босно.</li>
+    </ul>
+    <div class="say"><span class="lbl">Таны хэлэх үг</span>
+      <p>Одоо найрын гол ёслол эхэлж байна.</p>
+      <p>Хүүхэдтэй ивээл жилтэй, буян хишигтэй <span class="fill"></span> ахаа (эгчээ), манай хүүгийн сэвлэгийг анх хөндөж, хайчны амыг нээж өгнө үү.</p>
+      <p><b>За одоо хүүгийнхээ даахийг үргээе!</b></p>
+    </div>
+    <ul>
+      <li>Анх хөндөх хүн <b>модон хутгаар</b> үсэнд нь хүрнэ.</li>
+      <li>Дараа нь хадагтай хайчаар <b>баруун шанааных</b> нь үснээс бага зэрэг хайчилна. Ээж нь үсийг хадагт хураана.</li>
+      <li>Хүү аяганаас сүү амсана. Анх хөндөх хүн хүүгийн магнайд сүү түрхэж мялаана.</li>
+      <li>Анх хөндөх хүн ерөөлөө хэлж (ерөөлийн хуудас), бэлгээ өгнө.</li>
+    </ul>
+    <p class="who">Хэн: <b>анх хөндөх хүн, ээж нь, сүүний туслах</b></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">10:25<small>15 мин</small></div>
+  <div class="body">
+    <h3>Гэр бүлийнхэн хөндөх</h3>
+    <ul>
+      <li>Дараалал: өвөө эмээ, дараа нь ээж, та, дараа нь авга, нагац талынхан ахмадаасаа эхэлнэ.</li>
+      <li>Таны ээлж ирэхэд түр хөтлөгч таны өмнөөс нэг өгүүлбэр хэлнэ. Та хайчилж, ерөөлөө хэлээд, микрофоноо буцааж авна.</li>
+    </ul>
+    <div class="say"><span class="lbl">Таны хэлэх үг</span>
+      <p>Одоо өвөө, эмээ нараа урьж байна. Хүүгийнхээ сэвлэгт гар хүргэнэ үү.</p>
+      <p>Одоо авга, нагац ах дүү нараа урьж байна.</p>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">10:40<small>35 мин</small></div>
+  <div class="body">
+    <h3>Зочид хөндөх</h3>
+    <ul>
+      <li>Ахмад зочдоос эхэлнэ. Хүүг <b>нар зөв</b> тойруулна, эсвэл зочид хүүгийн дэргэд ирж болно.</li>
+      <li>Зочин бүр: жижиг аяганаас сүү амсаж, <b>өчүүхэн</b> хэсэг үс хайчилж, ерөөлөө хэлээд, бэлгээ уутанд хийнэ. Бэлгийн туслах хэн юу өгснийг бичнэ.</li>
+      <li>Нэг хүнд 40 секунд орчим. 40 орчим зочин байвал 35 минут гэж тооцоорой.</li>
+    </ul>
+    <div class="say"><span class="lbl">Таны хэлэх үг</span>
+      <p>Хүндэт зочид маань ахмадаасаа эхлээд нар зөв дарааллаар сэвлэгт гар хүргэнэ үү.</p>
+      <p>Сүүнээс амсаад, хадагтай хайчаар өчүүхэн хэсгийг хайчилж, ерөөлөө хэлээд, бэлгээ уутанд хийнэ үү.</p>
+      <p>Ерөөл бэлдээгүй бол ширээн дээр ерөөлийн хуудас бий.</p>
+    </div>
+    <p class="tip">Хүү ядарч, уйлбал 5 минут завсарлана. Ээжийнх нь өвөр дээр суулгаж, тоглоом, амттан өгөөд, дараа нь үргэлжлүүлнэ. Хүчээр бүү хий.</p>
+    <div class="say"><span class="lbl">Завсарлага хэрэгтэй бол л хэлнэ</span>
+      <p>Манай хүү бага зэрэг амсхийе. Хэдэн минутын дараа үргэлжлүүлье.</p>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">11:15<small>10 мин</small></div>
+  <div class="body">
+    <h3>Урт ерөөлөөр ёслолоо өндөрлөх</h3>
+    <ul>
+      <li>Ерөөлч эсвэл хүндтэй ахмад хүн урт ерөөлийг хэлнэ, хуурч байвал хуур дагуулна. Ингээд сэвлэг үргээх ёслол үдээс өмнө дуусна.</li>
+    </ul>
+    <div class="say"><span class="lbl">Таны хэлэх үг</span>
+      <p>Сэвлэг үргээх ёслолоо ерөөлөөр өндөрлүүлье.</p>
+      <p><span class="fill"></span> ах маань сэвлэг үргээх ерөөл дэвшүүлнэ.</p>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">11:30<small>60 мин</small></div>
+  <div class="body">
+    <h3>Найр</h3>
+    <ul>
+      <li>Эхлээд бүх хүнд <b>цагаалга</b>, хүүхдүүдэд жижиг аягаар цагаалга өгнө. Дараа нь хоол.</li>
+      <li>Хундага өргөхдөө айраг. Архи тавихгүй.</li>
+    </ul>
+    <div class="say"><span class="lbl">Таны хэлэх үг</span>
+      <p>Хүүгийнхээ сэвлэгийг үргээж, та бүхний ерөөл хишгийг хүртлээ.</p>
+      <p>Одоо цагаалгаа амсаж, найраа үргэлжлүүлье. Идээ ундаагаа сайхан хүртээрэй.</p>
+    </div>
+    <p class="who">Хэн: <b>туслах үйлчилнэ; та ахмадуудтай сууна</b></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">12:30<small>30 мин</small></div>
+  <div class="body">
+    <h3>Дуу, зураг, тоглоом</h3>
+    <ul>
+      <li>Ширээгээрээ дуулна. Хүү, анх хөндсөн хүнтэй гэр бүлээрээ зургаа авахуулна. Бялуу байвал энд. Хүүхдүүд тоглоно.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">13:00<small>15 мин</small></div>
+  <div class="body">
+    <h3>Үсийг бүрэн авах (заавал одоо биш)</h3>
+    <ul>
+      <li>Та үлдсэн үсийг машинаар авна. <b>Бүх</b> үсийг хадагт хийнэ.</li>
+      <li>Хүү ядарсан бол дараа нь гэртээ эсвэл үсчинд авахуулна. Үсчнээс бүх үсийг нь авахаа мартуузай.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">13:30<small>20 мин</small></div>
+  <div class="body">
+    <h3>Талархлын бэлэг, хаалтын үг</h3>
+    <ul>
+      <li>Анх хөндсөн хүнд тусгай бэлэг, зочин хүүхдүүдэд жижиг бэлэг өгнө.</li>
+    </ul>
+    <div class="say"><span class="lbl">Таны хэлэх үг</span>
+      <p>Өнөөдөр манай хүүгийн сэвлэг үргээх найрт ирж, ерөөл бэлгээ хайрласан та бүхэнд гүн талархал илэрхийлье.</p>
+      <p>Хүүгийнхээ сэвлэгийг анх хөндсөн <span class="fill"></span> ахдаа (эгчдээ) тусгайлан баярласнаа хэлье.</p>
+      <p>Та бүхний ерөөсөн ерөөл биелж, бүгдээрээ эрүүл энх, сайн сайхан яваарай.</p>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="time">14:00<small>ба дараа нь</small></div>
+  <div class="body">
+    <h3>Зочид тарах, дараа нь</h3>
+    <ul>
+      <li>Ахмадуудаа үүдэнд хүртэл дагалдаж гаргана. Хүсвэл идээнээс барьж явуулна.</li>
+      <li>Үстэй хадгийг эвхэж, авдар мэт аюулгүй газар хадгална. Хэзээ ч хаяхгүй.</li>
+      <li>Бэлгийн бүртгэлээ хадгална. Маргааш нь ахмадууд, анх хөндсөн хүндээ утсаар ярьж, талархлаа хэлнэ.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Сүүлийн нүүр: хайчлах дараалал -->
+<div class="page-break"></div>
+<div class="stripe"></div>
+<h1>Хайчлах дараалал</h1>
+<p class="sub">Нэрсийг урьдчилан бичнэ. Түр хөтлөгч, бэлгийн туслах хоёрт нэг нэг хувийг өгнө.</p>
+
+<div class="grid2" style="margin-top:4mm">
+  <div>
+    <h2>Анх хөндөх хүн, гэр бүл</h2>
+    <ul class="order">
+      <li>Анх хөндөх хүн: <span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+    </ul>
+    <h2>Ирж чадаагүй хамаатанд үлдээх сэвлэг</h2>
+    <p>Нэр: <span class="fill"></span></p>
+  </div>
+  <div>
+    <h2>Ахмадууд, бусад зочид</h2>
+    <p class="sub" style="margin-bottom:2mm">Ахмадаас нь эхэлнэ. Жагсаалтад ороогүй зочид эдний дараа хөндөнө.</p>
+    <ul class="order">
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+      <li><span class="fill"></span></li>
+    </ul>
+  </div>
+</div>
+
+<h2>Ямар нэг юм болбол</h2>
+<ul>
+  <li><b>Хүү уйлах, ядрах:</b> завсарлаад, ээжийнх нь өвөр дээр суулгаж, суулгасан чигээр нь үргэлжлүүлнэ. Хүчээр бүү хий.</li>
+  <li><b>Зочин үдээс хойш ирвэл:</b> уламжлал ёсоор үсэнд гар хүргэхгүй, найрт суудаг. Гэр бүлээрээ шийдэж болно.</li>
+  <li><b>Анх хөндөх хүн ирж чадахгүй бол:</b> хамгийн ахмад өвөө эсвэл эмээ эхэлж хөндөнө. Тэд байхгүй бол аав нь (та) эхэлнэ.</li>
+  <li><b>Цаг хүрэхгүй бол:</b> эхнэр нөхөр, гэр бүлээрээ ар араасаа хурдан хөндөж, богинохон ерөөл хэлнэ.</li>
+</ul>
+
+<p class="foot">Монгол эх сурвалж, эцэг эхчүүдийн туршлагад (2016–2026) үндэслэв. Ёс заншил гэр бүл, нутаг, ламаас хамаарч өөр байдаг. Эцсийн үгийг танай ахмадууд, лам хэлнэ.</p>
+
+</body>
+</html>
